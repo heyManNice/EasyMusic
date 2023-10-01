@@ -1,0 +1,67 @@
+# Project: EasyMusic
+# Makefile created by Dev-C++ 6.7.5
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+RES      = EasyMusic_private.res
+OBJ      = main.o allProc.o headtool.o foottool.o allClass.o mytools.o Lmenu.o tooltip.o gdiDevice.o PlayingSong.o network.o yyjson/yyjson.o $(RES)
+LINKOBJ  = main.o allProc.o headtool.o foottool.o allClass.o mytools.o Lmenu.o tooltip.o gdiDevice.o PlayingSong.o network.o yyjson/yyjson.o $(RES)
+LIBS     = -L"D:/mingw64/lib" -L"D:/mingw64/x86_64-w64-mingw32/lib" -g3 -mwindows lib/WinMM.Lib lib/dwmapi.lib lib/wininet.Lib -static
+INCS     = -I"D:/mingw64/include" -I"D:/mingw64/x86_64-w64-mingw32/include"
+CXXINCS  = -I"D:/mingw64/include" -I"D:/mingw64/x86_64-w64-mingw32/include"
+BIN      = EasyMusic.exe
+CXXFLAGS = $(CXXINCS) -g3
+ENCODINGS = -finput-charset=utf-8 -fexec-charset=gbk
+CFLAGS   = $(INCS) -g3
+RM       = del /q /f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "$(BIN)" $(LIBS)
+
+main.o: main.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)  $(ENCODINGS) 
+
+allProc.o: allProc.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c allProc.cpp -o allProc.o $(CXXFLAGS)  $(ENCODINGS) 
+
+headtool.o: headtool.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c headtool.cpp -o headtool.o $(CXXFLAGS)  $(ENCODINGS) 
+
+foottool.o: foottool.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c foottool.cpp -o foottool.o $(CXXFLAGS)  $(ENCODINGS) 
+
+allClass.o: allClass.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c allClass.cpp -o allClass.o $(CXXFLAGS)  $(ENCODINGS) 
+
+mytools.o: mytools.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c mytools.cpp -o mytools.o $(CXXFLAGS)  $(ENCODINGS) 
+
+Lmenu.o: Lmenu.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c Lmenu.cpp -o Lmenu.o $(CXXFLAGS)  $(ENCODINGS) 
+
+tooltip.o: tooltip.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c tooltip.cpp -o tooltip.o $(CXXFLAGS) 
+
+gdiDevice.o: gdiDevice.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c gdiDevice.cpp -o gdiDevice.o $(CXXFLAGS) 
+
+PlayingSong.o: PlayingSong.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c PlayingSong.cpp -o PlayingSong.o $(CXXFLAGS) 
+
+network.o: network.cpp FreeImage.h myhead.h yyjson/yyjson.h
+	$(CPP) -c network.cpp -o network.o $(CXXFLAGS)  $(ENCODINGS) 
+
+yyjson/yyjson.o: yyjson/yyjson.c yyjson/yyjson.h
+	$(CPP) -c yyjson/yyjson.c -o yyjson/yyjson.o $(CXXFLAGS) 
+
+EasyMusic_private.res: EasyMusic_private.rc 
+	$(WINDRES) -i EasyMusic_private.rc --input-format=rc -o EasyMusic_private.res -O coff 
+
