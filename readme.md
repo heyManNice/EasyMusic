@@ -71,7 +71,7 @@ headtool.cpp：顶部栏
 Lmenu.cpp：左侧边导航栏  
 main.cpp：主程序入口  
 mytools.cpp：各种小工具  
-network.cpp：网络请求相关
+network.cpp：网络请求相关  
 PlayingSong.cpp：音乐播放器抽象类  
 tooltip.cpp：tootip鼠标悬浮提示框
 ## 其他文件
