@@ -272,7 +272,7 @@ LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show("关闭",pt.x,pt.y);
+						tooltip_show(L"关闭",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -355,9 +355,9 @@ LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
 						if(IsZoomed(HWNDM[H_MAIN_WIN])){
-							tooltip_show("向下还原",pt.x,pt.y);
+							tooltip_show(L"向下还原",pt.x,pt.y);
 						}else{
-							tooltip_show("最大化",pt.x,pt.y);
+							tooltip_show(L"最大化",pt.x,pt.y);
 						}
 					}
 					KillTimer(hwnd,777);
@@ -457,7 +457,7 @@ LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPa
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show("最小化",pt.x,pt.y);
+						tooltip_show(L"最小化",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -534,7 +534,7 @@ LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show("mini模式(Ctrl+M)",pt.x,pt.y);
+						tooltip_show(L"mini模式(Ctrl+M)",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -1386,10 +1386,10 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					mm++;
 				}
 				ss=newPosition;
-				string tooltipcontext = (mm<10?"0":"") + to_string(mm)+":" + (ss<10?"0":"") + to_string(ss);
+				wstring tooltipcontext = (mm<10?L"0":L"") + to_wstring(mm)+L":" + (ss<10?L"0":L"") + to_wstring(ss);
 				POINT pt;
 				GetCursorPos(&pt);
-				tooltip_show(tooltipcontext.c_str(),pt.x,pt.y);
+				tooltip_show(tooltipcontext,pt.x,pt.y);
 				
 				if(!ProgressMouseState.progress){
 					ProgressMouseState.progress=1;
@@ -1524,30 +1524,30 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					if(ProgressMouseState.btn_group[ProgressMouseState.btn_groupTimerIndex]){
 						POINT pt;
 						GetCursorPos(&pt);
-						string context;
+						wstring context;
 						switch (ProgressMouseState.btn_groupTimerIndex) {
 							case 0:
-								context = "顺序播放";
+								context = L"顺序播放";
 								break;
 							case 1:
-								context = "上一曲";
+								context = L"上一曲";
 								break;
 							case 2:{
 									if(player.playing){
-										context = "暂停";
+										context = L"暂停";
 									}else{
-										context = "播放";
+										context = L"播放";
 									}
 									break;
 								}
 							case 3:
-								context = "下一曲";
+								context = L"下一曲";
 								break;
 							case 4:
-								context = "打开歌词";
+								context = L"打开歌词";
 								break;
 							default:
-								context = "出Bug了";
+								context = L"出Bug了";
 								break;
 						}
 						tooltip_show(context.c_str(),pt.x,pt.y);
@@ -1777,24 +1777,24 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 					if(PlayingSetMouseState.btn_group[PlayingSetMouseState.btn_groupTimerIndex]){
 						POINT pt;
 						GetCursorPos(&pt);
-						string context;
+						wstring context;
 						switch (PlayingSetMouseState.btn_groupTimerIndex) {
 							case 0:
-								context = "打开播放列表";
+								context = L"打开播放列表";
 								break;
 							case 1:
-								context = "开始一起听";
+								context = L"开始一起听";
 								break;
 							case 2:{
 								if(player.getVolume()==0){
-									context = "恢复音量";
+									context = L"恢复音量";
 								}else{
-									context = "静音";
+									context = L"静音";
 								}
 								break;
 								}
 							default:
-								context = "出Bug了";
+								context = L"出Bug了";
 								break;
 						}
 						tooltip_show(context.c_str(),pt.x,pt.y);

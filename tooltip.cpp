@@ -2,8 +2,9 @@
 #include "myhead.h"
 #include <string>
 #include <algorithm>
+#include <cwctype>
 
-std::string tooltip_str="初次显示的文字";
+std::wstring tooltip_str=L"初次显示的文字";
 
 LRESULT CALLBACK tooltipProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
 	switch(Message) {
@@ -18,7 +19,7 @@ LRESULT CALLBACK tooltipProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 				HFONT hFont = CreateFont(DDPI(13.333333), 0, 0, 0, 400, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, TEXT("Arial"));
 				HGDIOBJ hOldFont = SelectObject(hdc, hFont);
 				SetTextColor(hdc, RGB(77,62,64));
-				DrawText(hdc,tooltip_str.c_str(),-1,&ps.rcPaint,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+				DrawTextW(hdc,tooltip_str.c_str(),-1,&ps.rcPaint,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 				DeleteObject(hFont);
 				DeleteObject(hpen);
 				ReleaseDC(hwnd, hdc);
@@ -51,18 +52,18 @@ int tooltip_tooltip(HINSTANCE hInstance){
 	//SetWindowPos(HWNDM[H_tooltip],HWND_TOP,400,400,66,26,SWP_HIDEWINDOW);
 	return 0;
 }
-int tooltip_show(std::string str,int x, int y){
+int tooltip_show(std::wstring str,int x, int y){
 	int enNum = 0;
 	int enSupNum=0;
 	int nuNum=0;
 	for(int i = 0; i < str.size(); i++){
-		if(std::isalpha(str[i])){
+		if(std::iswalpha(str[i])){
 			enNum++;
 		}
-		if(std::isupper(str[i])){
+		if(std::iswupper(str[i])){
 			enSupNum++;
 		}
-		if(std::isdigit(str[i])){
+		if(std::iswdigit(str[i])){
 			nuNum++;
 		}
 	}

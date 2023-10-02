@@ -114,7 +114,7 @@ double DPIP(double num);
 
 //tooltip工具
 int tooltip_tooltip(HINSTANCE hInstance);
-int tooltip_show(std::string str,int x, int y);
+int tooltip_show(std::wstring str,int x, int y);
 int tooltip_hide();
 
 
