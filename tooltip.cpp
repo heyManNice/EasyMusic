@@ -3,7 +3,7 @@
 #include <string>
 #include <algorithm>
 
-std::string tooltip_str="³õ´ÎÏÔÊ¾µÄÎÄ×Ö";
+std::string tooltip_str="åˆæ¬¡æ˜¾ç¤ºçš„æ–‡å­—";
 
 LRESULT CALLBACK tooltipProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
 	switch(Message) {
@@ -41,7 +41,7 @@ int tooltip_tooltip(HINSTANCE hInstance){
 	tooltipClass.hbrBackground = CreateSolidBrush(RGB(255,255,255));
 	tooltipClass.lpszClassName = "tooltip";
 	if(!RegisterClassEx(&tooltipClass)) {
-		MessageBox(NULL, "´°¿ÚÀà×¢²áÊ§°Ü!","´íÎó!",MB_ICONEXCLAMATION|MB_OK);
+		MessageBox(NULL, "çª—å£ç±»æ³¨å†Œå¤±è´¥!","é”™è¯¯!",MB_ICONEXCLAMATION|MB_OK);
 		PostQuitMessage(0);
 	}
 	HWNDM[H_tooltip] = CreateWindowEx(WS_EX_TOPMOST|WS_EX_TOOLWINDOW,"tooltip",NULL, 
@@ -75,7 +75,7 @@ int tooltip_show(std::string str,int x, int y){
 		ShowWindow(HWNDM[H_tooltip],SW_SHOWNA);
 	}
 	//AnimateWindow(HWNDM[H_tooltip],300,AW_BLEND);
-	//Õâ¸ö¶¯»­ÊÇÏÈÏÔÊ¾´°ÌåÔÙ»æÖÆÄÚÈİµÄ£¬²»ÖªµÀÔõÃ´½â¾ö
+	//è¿™ä¸ªåŠ¨ç”»æ˜¯å…ˆæ˜¾ç¤ºçª—ä½“å†ç»˜åˆ¶å†…å®¹çš„ï¼Œä¸çŸ¥é“æ€ä¹ˆè§£å†³
 	InvalidateRect(HWNDM[H_tooltip], NULL, FALSE);
 	return 0;
 }

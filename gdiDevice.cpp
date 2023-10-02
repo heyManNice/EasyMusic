@@ -3,8 +3,8 @@
 map<string,HPEN> myPEN;
 map<string,HBRUSH> myBRUSH;
 
-//³£ÓÃµÄ±ÊË¢ÀÏÊÇ´´½¨ºÍÉ¾³ı¸Ğ¾õ×Ü²»ºÃ£¬ÊÔÊÔ±£´æÕâĞ©±ÊË¢
-//Ç§ÍòÒªÉ¾³ı´´½¨µÄ×ÊÔ´£¬ÎÒÔø¾­ÒòÎªÍü¼ÇÉ¾³ı£¬µ¼ÖÂgdi±ÀÀ£ÁË
+//å¸¸ç”¨çš„ç¬”åˆ·è€æ˜¯åˆ›å»ºå’Œåˆ é™¤æ„Ÿè§‰æ€»ä¸å¥½ï¼Œè¯•è¯•ä¿å­˜è¿™äº›ç¬”åˆ·
+//åƒä¸‡è¦åˆ é™¤åˆ›å»ºçš„èµ„æºï¼Œæˆ‘æ›¾ç»å› ä¸ºå¿˜è®°åˆ é™¤ï¼Œå¯¼è‡´gdiå´©æºƒäº†
 
 int init_gdiDevice(){
 	myPEN["1_black"] = CreatePen(PS_SOLID, 1, RGB(0,0,0));
@@ -21,15 +21,15 @@ int init_gdiDevice(){
 int safeSwitchColor(HDC hdc,int type,int w,int r,int g,int b){
 	switch (type) {
 		case 1:
-			//±Ê
+			//ç¬”
 			return DeleteObject((HPEN)SelectObject(hdc, CreatePen(PS_SOLID, w, RGB(r,g,b))));
 			break;
 		case 2:
-			//Ë¢×Ó
+			//åˆ·å­
 			return DeleteObject((HBRUSH)SelectObject(hdc, CreateSolidBrush(RGB(r,g,b))));
 			break;
 		case 3:
-			//¿Õ±Ê
+			//ç©ºç¬”
 			return DeleteObject((HPEN)SelectObject(hdc, CreatePen(PS_NULL, 0, 0)));
 			break;
 		default:
