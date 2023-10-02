@@ -83,7 +83,8 @@ Makefile.win：编译规则文件（DEV-C++自动生成）
 请[点击这里](https://space.bilibili.com/226975720)并私信联系我
 
 ## 2.如果你只想为我们贡献你的代码  
-请将此项目Fork之后，clone到你的机器上，新建分支，做出修改后并推送到你的仓库，并在你的仓库的“pull request”页面中创建拉起请求。我们会查看你的代码并做出回应。
+请将此项目Fork之后，clone到你的机器上，新建分支，做出修改后并推送到你的仓库，并在你的仓库的“pull request”页面中创建拉起请求。我们会查看你的代码并做出回应。  
+更多详细信息请参考[这里](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)或者在互联网上搜索其他教程。
 
 ## 3.如果你想为我们指出问题和表达你的想法  
 请[点击这里](https://github.com/heyManNice/EasyMusic/issues/new)
