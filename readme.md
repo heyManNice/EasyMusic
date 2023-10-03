@@ -34,9 +34,14 @@
 # 原项目编译器
 [MinGW GCC13.1.10](https://github.com/niXman/mingw-builds-binaries)
 
+目前换上了xmake构建工具，非常方便。  
+[点击这里](https://github.com/heyManNice/EasyMusic/issues/3)查看具体用法。目前只需要你的电脑正确安装了 VS 2022后在./执行```xmake -y```即可编译。  
+但是有一个问题，当前程序读取的资源文件是外置的相对路径。后面研究之后把资源转换成打包进程序的形式。目前编译好了之后，还要把./res文件夹复制到和程序一样的目录，程序才能正常运行。目前还不知道如何设置编译之后的程序图标。
+
 # 原项目编辑器
 DEV-C++ 6.7.5
 
+目前换上了vscode + xmake + C/C++扩展的形式。体验还不错。比较坑的是得在开始菜单中找到Developer PowerShell for VS 2022，打开之后输入code启动的vscode才能正常运行。
 # 用到的Github开源项目
 [yyjson](https://github.com/ibireme/yyjson)  
 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
@@ -53,7 +58,7 @@ DEV-C++ 6.7.5
 
 # 各文件(夹)功能
 ## 文件夹
-lib：静态链接库  
+~~lib：静态链接库~~  
 res：资源文件  
 yyjson：yyjson解析库相关文件  
 SampleImage：readme.md的图片文件
@@ -75,7 +80,8 @@ network.cpp：网络请求相关
 PlayingSong.cpp：音乐播放器抽象类  
 tooltip.cpp：tootip鼠标悬浮提示框
 ## 其他文件
-EasyMusic.dev：DEV-C++的项目工程属性文件  
+~~EasyMusic.dev：DEV-C++的项目工程属性文件~~  
+xmake.lua：xmake的工程文件
 EasyMusic.ico：项目图标  
 Makefile.win：编译规则文件（DEV-C++自动生成）
 # 协作

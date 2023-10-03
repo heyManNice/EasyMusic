@@ -53,24 +53,25 @@ int tooltip_tooltip(HINSTANCE hInstance){
 	return 0;
 }
 int tooltip_show(std::wstring str,int x, int y){
-	int enNum = 0;
-	int enSupNum=0;
-	int nuNum=0;
-	for(int i = 0; i < str.size(); i++){
-		if(std::iswalpha(str[i])){
-			enNum++;
+    int LowerCase=0, UpperCase=0,digit=0, character=0,other=0;
+    for (int i = 0; i < str.size(); )
+	{
+        if (str[i] >= 'a' && str[i] <= 'z')
+		{
+            LowerCase ++;i++;
 		}
-		if(std::iswupper(str[i])){
-			enSupNum++;
+        else if (str[i] >= 'A' && str[i] <= 'Z')
+		{
+            UpperCase ++;i++;
 		}
-		if(std::iswdigit(str[i])){
-			nuNum++;
-		}
-	}
-	int enLowNum = enNum-enSupNum;
-	int otherNum = str.size() - enLowNum;
-	//printf("%d",enLowNum);
-	SetWindowPos(HWNDM[H_tooltip],HWND_TOP,x+DDPI(11),y+DDPI(16.666666),nuNum*DDPI(1)+enLowNum*DDPI(4.666666)+enSupNum*DDPI(5)+otherNum*DDPI(6.666666)+DDPI(5.333333),DDPI(18.666666),SWP_NOOWNERZORDER);
+        else if (str[i] >= '0' && str[i] <= '9')
+		{
+            digit ++;i++;
+		}else{
+            other ++;i++;
+        }
+    }
+	SetWindowPos(HWNDM[H_tooltip],HWND_TOP,x+DDPI(11),y+DDPI(16.666666),digit*DDPI(4)+LowerCase*DDPI(4)+UpperCase*DDPI(5)+other*DDPI(12)+DDPI(5.333333),DDPI(18.666666),SWP_NOOWNERZORDER);
 	tooltip_str = str;
 	if(!IsWindowVisible(HWNDM[H_tooltip])){
 		ShowWindow(HWNDM[H_tooltip],SW_SHOWNA);

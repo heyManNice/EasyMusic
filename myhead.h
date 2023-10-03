@@ -2,39 +2,21 @@
 #ifndef MYHEAD_H
 #define MYHEAD_H
 #include <iostream>
-
 #include<string>
 #include<assert.h>
 #include<fstream>
-
 #include <format>
 #include "yyjson/yyjson.h"
-
 #include <windows.h>
 #include <windowsx.h>
 #include <map>
 #include <winuser.h>
 #include <string>
 #include <windef.h>
-//#include <unistd.h>
-
-
-//#include "FreeImage.h"
-//#pragma comment(lib, "FreeImage.lib")
-
 #include <dwmapi.h>
-#pragma comment(lib, "Dwmapi.lib")
-
 #include <mmsystem.h>
-#pragma comment(lib, "WinMM.lib")
-
-//#include <gdiplus.h>
-//#pragma comment (lib,"gdiplus.lib")
-
 #include <wininet.h>
-#pragma comment(lib, "wininet.lib")
 
-//using namespace Gdiplus;
 
 using namespace std;
 

@@ -1133,6 +1133,7 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 					GetObject(hBmp, sizeof(bm), &bm);
 					int nWidth = DPI(43);
 					int nHeight = DPI(43);
+                    SetStretchBltMode(hdc,HALFTONE);//防止图片缩小失真
 					StretchBlt(hdc, 0, 0, nWidth, nHeight, cdc, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);//拉伸拷贝
 					DeleteObject(hBmp);
 					DeleteDC(cdc);
