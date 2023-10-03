@@ -16,11 +16,11 @@
 #include <winuser.h>
 #include <string>
 #include <windef.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 
-#include "FreeImage.h"
-#pragma comment(lib, "FreeImage.lib")
+//#include "FreeImage.h"
+//#pragma comment(lib, "FreeImage.lib")
 
 #include <dwmapi.h>
 #pragma comment(lib, "Dwmapi.lib")
@@ -38,103 +38,104 @@
 
 using namespace std;
 
-//Ö÷´°¿ÚÊÂ¼ş
+//ä¸»çª—å£äº‹ä»¶
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//headÀ¸ÊÂ¼ş
+//headæ äº‹ä»¶
 LRESULT CALLBACK mytitleProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ÓÒÉÏ½Ç²Ù×÷°´Å¥×éÊÂ¼ş
+//å³ä¸Šè§’æ“ä½œæŒ‰é’®ç»„äº‹ä»¶
 LRESULT CALLBACK myOP_BtnProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//¹Ø±Õ°´Å¥ÊÂ¼ş
+//å…³é—­æŒ‰é’®äº‹ä»¶
 LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ÊäÈë¿òÊÂ¼ş
+//è¾“å…¥æ¡†äº‹ä»¶
 LRESULT CALLBACK Edit_out_Proc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//footÀ¸ÊÂ¼ş
+//footæ äº‹ä»¶
 LRESULT CALLBACK myfootProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
-//×î´ó»¯»¹Ô­°´Å¥
+//æœ€å¤§åŒ–è¿˜åŸæŒ‰é’®
 LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//×îĞ¡»¯°´Å¥
+//æœ€å°åŒ–æŒ‰é’®
 LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//miniÄ£Ê½°´Å¥
+//miniæ¨¡å¼æŒ‰é’®
 LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ËÑË÷À¸ËÑË÷Í¼±ê
+//æœç´¢æ æœç´¢å›¾æ ‡
 LRESULT CALLBACK searchProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//logo¹ı³Ì
+//logoè¿‡ç¨‹
 LRESULT CALLBACK logoProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//×ó±ß²Ëµ¥ÊÂ¼ş
+//å·¦è¾¹èœå•äº‹ä»¶
 LRESULT CALLBACK L_menuProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//Ö÷¹¦ÄÜ²Ëµ¥
+//ä¸»åŠŸèƒ½èœå•
 LRESULT CALLBACK L_MainIndexProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//Ö÷¹¦ÄÜ²Ëµ¥°´Å¥
+//ä¸»åŠŸèƒ½èœå•æŒ‰é’®
 LRESULT CALLBACK L_MainIndex_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ÎÒµÄÒôÀÖ¹¦ÄÜ²Ëµ¥
+//æˆ‘çš„éŸ³ä¹åŠŸèƒ½èœå•
 LRESULT CALLBACK MyMusicIndexProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//¹¦ÄÜ²Ëµ¥Ğ¡±êÌâ
+//åŠŸèƒ½èœå•å°æ ‡é¢˜
 LRESULT CALLBACK IndexTitleProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ÎÒµÄÒôÀÖ²Ëµ¥°´Å¥
+//æˆ‘çš„éŸ³ä¹èœå•æŒ‰é’®
 LRESULT CALLBACK L_Mymusic_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//²âÊÔ´°¿Ú±ê¼Ç¾ØĞÎ
+//æµ‹è¯•çª—å£æ ‡è®°çŸ©å½¢
 LRESULT CALLBACK testWinProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//µ×²¿×ó²à²¥·ÅÖĞµÄ¸èÇúĞÅÏ¢
+//åº•éƒ¨å·¦ä¾§æ’­æ”¾ä¸­çš„æ­Œæ›²ä¿¡æ¯
 LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//µ×²¿¿ØÖÆ°´Å¥×é
+//åº•éƒ¨æ§åˆ¶æŒ‰é’®ç»„
 LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//µ×²¿ÓÒ²àµÄ²¥·ÅÉèÖÃ
+//åº•éƒ¨å³ä¾§çš„æ’­æ”¾è®¾ç½®
 LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//¿ØÖÆÒôÁ¿Ãæ°å
+//æ§åˆ¶éŸ³é‡é¢æ¿
 LRESULT CALLBACK VolumePanelProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ËÑË÷¿òÊÂ¼ş
+//æœç´¢æ¡†äº‹ä»¶
 LRESULT CALLBACK searchEditProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ËÑË÷½á¹ûÒ³
+//æœç´¢ç»“æœé¡µ
 LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
-//ÒôÀÖËÑË÷½á¹ûÏîÄ¿
+//éŸ³ä¹æœç´¢ç»“æœé¡¹ç›®
 LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
 
 
-//¼ÓÔØheadÀ¸
+//åŠ è½½headæ 
 int Loadhead(HINSTANCE hInstance,HWND hwnd);
-//¼ÓÔØfootÀ¸
+//åŠ è½½footæ 
 int Loadfoot(HINSTANCE hInstance,HWND hwnd);
-//³õÊ¼»¯´°¿ÚÀà
+//åˆå§‹åŒ–çª—å£ç±»
 int init_wc_Class(HINSTANCE hInstance);
-//¼ì²â´°¿ÚÊÇ·ñ´´½¨³É¹¦
+//æ£€æµ‹çª—å£æ˜¯å¦åˆ›å»ºæˆåŠŸ
 int cheackWin(HWND hwnd);
-//¼ì²â´°¿ÚÀàÊÇ·ñ×¢²á³É¹¦
+//æ£€æµ‹çª—å£ç±»æ˜¯å¦æ³¨å†ŒæˆåŠŸ
 int cheackClass(WNDCLASSEX wc);
-//¼ÓÔØ×ó±ßµÄ²Ëµ¥
+//åŠ è½½å·¦è¾¹çš„èœå•
 int LoadLmenu(HINSTANCE hInstance,HWND hwnd);
-//»ñÈ¡ÆÁÄ»Ëõ·Å±ÈÀı
+//è·å–å±å¹•ç¼©æ”¾æ¯”ä¾‹
 double GetScreenScale();
-//dpi×ª»»ÊıÖµ
+//dpiè½¬æ¢æ•°å€¼
 int DPI(int num);
 int DDPI(double num);
 int DPIW(double num);
 double DPIP(double num);
 
-//tooltip¹¤¾ß
+//tooltipå·¥å…·
 int tooltip_tooltip(HINSTANCE hInstance);
-int tooltip_show(std::string str,int x, int y);
+int tooltip_show(std::wstring str,int x, int y);
 int tooltip_hide();
 
 
-//³õÊ¼»¯»æÍ¼Éè±¸
+//åˆå§‹åŒ–ç»˜å›¾è®¾å¤‡
 int init_gdiDevice();
 
-//×Ö·û¼¯×ª»»
+//å­—ç¬¦é›†è½¬æ¢
 string Utf8ToGbk(const char *src_str);
 string GbkToUtf8(const char *src_str);
-//url±àÂë½âÂë
+//urlç¼–ç è§£ç 
 std::string UrlEncode(const std::string& str);
 std::string UrlDecode(const std::string& str);
-//http getÇëÇó
-int net_GET(string url,char *result);
+//http getè¯·æ±‚
+std::tuple<int, std::string> net_GETNew(string url);
+std::tuple<int, std::string> net_GET(string url);
 
-//µ÷ÒôÁ¿Ãæ°åµÄÏÔÊ¾ÓëÒş²Ø
+//è°ƒéŸ³é‡é¢æ¿çš„æ˜¾ç¤ºä¸éšè—
 void VolumePanel_show();
 void VolumePanel_hide();
 
-//°²È«ÇĞ»»»æÍ¼Éè±¸
+//å®‰å…¨åˆ‡æ¢ç»˜å›¾è®¾å¤‡
 int safeSwitchColor(HDC hdc,int type,int w,int r,int g,int b);
 
 struct MainIndexBTN{
@@ -154,14 +155,21 @@ struct MenuItem{
 	map<int,MainIndexBTN> childItem; 
 };
 
+struct image
+{
+	size_t width;
+	size_t height;
+	std::string data;
+};
 
-//ÕıÔÚ²¥·ÅÀà
+//æ­£åœ¨æ’­æ”¾ç±»
 class PlayingSong{
 	public:
 		int id;
 		string name;
 		string artist;
 		string album;
+		string albumPic;
 		string url;
 		string cover;
 		string lrc;
@@ -219,7 +227,7 @@ struct SearchItemInfo__struct{
 };
 
 
-//µ¼³öµÄÈ«¾Ö±äÁ¿
+//å¯¼å‡ºçš„å…¨å±€å˜é‡
 extern map<int,HWND> HWNDM;
 extern map<int,HBITMAP> BITM;
 extern double constDPI;
@@ -235,7 +243,7 @@ extern SearchResultPage_struct SearchResultPage;
 extern SearchItemWidth_struct SearchItemWidth;
 extern map<int,SearchItemInfo__struct> SearchItemInfo;
 
-//¶¨Òå´°¿Ú¹ÜÀí³£Á¿
+//å®šä¹‰çª—å£ç®¡ç†å¸¸é‡
 #define H_MAIN_WIN  	1
 #define H_MYHEAD		2
 #define H_OPBTN			3
@@ -248,7 +256,7 @@ extern map<int,SearchItemInfo__struct> SearchItemInfo;
 #define H_VolumePanel	10
 #define H_SearchResultPage 11
 
-//¶¨ÒåÎ»Í¼³£Á¿
+//å®šä¹‰ä½å›¾å¸¸é‡
 #define BIT_CLOSE		1
 
 

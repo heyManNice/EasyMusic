@@ -1,5 +1,7 @@
 #include "myhead.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 struct mouseState
 {
@@ -272,7 +274,7 @@ LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show("关闭",pt.x,pt.y);
+						tooltip_show(L"关闭",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -355,9 +357,9 @@ LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
 						if(IsZoomed(HWNDM[H_MAIN_WIN])){
-							tooltip_show("向下还原",pt.x,pt.y);
+							tooltip_show(L"向下还原",pt.x,pt.y);
 						}else{
-							tooltip_show("最大化",pt.x,pt.y);
+							tooltip_show(L"最大化",pt.x,pt.y);
 						}
 					}
 					KillTimer(hwnd,777);
@@ -457,7 +459,7 @@ LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPa
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show("最小化",pt.x,pt.y);
+						tooltip_show(L"最小化",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -534,7 +536,7 @@ LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show("mini模式(Ctrl+M)",pt.x,pt.y);
+						tooltip_show(L"mini模式(Ctrl+M)",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -1071,6 +1073,37 @@ LRESULT CALLBACK IndexTitleProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 	return 0;
 }
 
+image load_image(const std::string& data)
+{
+	constexpr int channels = 4;
+	int x, y, channels_in_file;
+	auto buffer = stbi_load_from_memory(reinterpret_cast<const uint8_t*>(data.data()),
+		static_cast<int>(data.size()), &x, &y, &channels_in_file, channels);
+	assert(buffer);
+
+	image res{};
+	res.width = static_cast<size_t>(x);
+	res.height = static_cast<size_t>(y);
+	res.data.assign(reinterpret_cast<const char*>(buffer), res.width * res.height * channels);
+
+	stbi_image_free(buffer);
+	return res;
+}
+
+HBITMAP create_bitmap(const image& img)
+{
+	auto copy = img.data;
+
+	for (size_t i = 0; i < (img.width * img.height); ++i)
+	{
+		auto& r = copy[i * 4 + 0];
+		auto& b = copy[i * 4 + 2];
+		std::swap(r, b);
+	}
+
+	return CreateBitmap(static_cast<int>(img.width), static_cast<int>(img.height), 4, 8, copy.data());
+}
+
 //底部左侧播放中的歌曲信息
 LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
 	switch(Message) {
@@ -1093,12 +1126,16 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 				    //图片位置
 				    //gdi只支持显示bitmap图片，而网易云返回jpeg格式，此处需要将jpeg转为bitmap，没研究出来，所以没搞
 				    RoundRect(hdc,0,0,DPI(43),DPI(43),DPI(7),DPI(7));
-				    RECT TextRc;
-				    TextRc.left = 0;
-				    TextRc.top = 0;
-				    TextRc.right = DPI(43);
-				    TextRc.bottom = DPI(43);
-				    DrawText(hdc,"图片",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+					auto hBmp = create_bitmap(load_image(player.albumPic));
+					auto cdc = CreateCompatibleDC(hdc);
+					SelectObject(cdc, hBmp);
+					BITMAP bm;
+					GetObject(hBmp, sizeof(bm), &bm);
+					int nWidth = DPI(43);
+					int nHeight = DPI(43);
+					StretchBlt(hdc, 0, 0, nWidth, nHeight, cdc, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);//拉伸拷贝
+					DeleteObject(hBmp);
+					DeleteDC(cdc);
 				    
 				    //歌曲名
 				    HFONT hFont = CreateFont(DPI(19), 0, 0, 0, 500, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, TEXT("Microsoft YaHei"));
@@ -1386,10 +1423,10 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					mm++;
 				}
 				ss=newPosition;
-				string tooltipcontext = (mm<10?"0":"") + to_string(mm)+":" + (ss<10?"0":"") + to_string(ss);
+				wstring tooltipcontext = (mm<10?L"0":L"") + to_wstring(mm)+L":" + (ss<10?L"0":L"") + to_wstring(ss);
 				POINT pt;
 				GetCursorPos(&pt);
-				tooltip_show(tooltipcontext.c_str(),pt.x,pt.y);
+				tooltip_show(tooltipcontext,pt.x,pt.y);
 				
 				if(!ProgressMouseState.progress){
 					ProgressMouseState.progress=1;
@@ -1524,30 +1561,30 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					if(ProgressMouseState.btn_group[ProgressMouseState.btn_groupTimerIndex]){
 						POINT pt;
 						GetCursorPos(&pt);
-						string context;
+						wstring context;
 						switch (ProgressMouseState.btn_groupTimerIndex) {
 							case 0:
-								context = "顺序播放";
+								context = L"顺序播放";
 								break;
 							case 1:
-								context = "上一曲";
+								context = L"上一曲";
 								break;
 							case 2:{
 									if(player.playing){
-										context = "暂停";
+										context = L"暂停";
 									}else{
-										context = "播放";
+										context = L"播放";
 									}
 									break;
 								}
 							case 3:
-								context = "下一曲";
+								context = L"下一曲";
 								break;
 							case 4:
-								context = "打开歌词";
+								context = L"打开歌词";
 								break;
 							default:
-								context = "出Bug了";
+								context = L"出Bug了";
 								break;
 						}
 						tooltip_show(context.c_str(),pt.x,pt.y);
@@ -1777,24 +1814,24 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 					if(PlayingSetMouseState.btn_group[PlayingSetMouseState.btn_groupTimerIndex]){
 						POINT pt;
 						GetCursorPos(&pt);
-						string context;
+						wstring context;
 						switch (PlayingSetMouseState.btn_groupTimerIndex) {
 							case 0:
-								context = "打开播放列表";
+								context = L"打开播放列表";
 								break;
 							case 1:
-								context = "开始一起听";
+								context = L"开始一起听";
 								break;
 							case 2:{
 								if(player.getVolume()==0){
-									context = "恢复音量";
+									context = L"恢复音量";
 								}else{
-									context = "静音";
+									context = L"静音";
 								}
 								break;
 								}
 							default:
-								context = "出Bug了";
+								context = L"出Bug了";
 								break;
 						}
 						tooltip_show(context.c_str(),pt.x,pt.y);

@@ -3,34 +3,38 @@
 
 void PlayingSong::SetMusic(int id){
 	this->id = id;
-	char song_result[10240];
 	this->playing = 0;
-	//Ó¦¸ÃÒªÔÚhttps://github.com/Binaryify/NeteaseCloudMusicApi
-	//ÖĞ·ÖÎöÊ¹ÓÃ¹Ù·½µÄapi£¬¹¹ÔìÒ»¸ö¹Ù·½µÄÇëÇóÀà£¬ÒòÎªÊ±¼äÎÊÌâ£¬´Ë´¦Ê¹ÓÃÁËÍøÉÏÕÒµÄµÚÈı·½´úÀí½Ó¿Ú
+	//åº”è¯¥è¦åœ¨https://github.com/Binaryify/NeteaseCloudMusicApi
+	//ä¸­åˆ†æä½¿ç”¨å®˜æ–¹çš„apiï¼Œæ„é€ ä¸€ä¸ªå®˜æ–¹çš„è¯·æ±‚ç±»ï¼Œå› ä¸ºæ—¶é—´é—®é¢˜ï¼Œæ­¤å¤„ä½¿ç”¨äº†ç½‘ä¸Šæ‰¾çš„ç¬¬ä¸‰æ–¹ä»£ç†æ¥å£
 
-	string url = "/song/detail?ids=" + to_string(this->id);
-	net_GET(url,song_result);
+	string url = "/song/detail?ids=" + to_string(this->id); 
+	auto [code, data] = net_GET(url);
 	//cout<<song_result;
 	
-	yyjson_doc *doc = yyjson_read(song_result, strlen(song_result), 0);
+	yyjson_doc *doc = yyjson_read(data.c_str(), data.size(), 0);
 	yyjson_val *root = yyjson_doc_get_root(doc);
 	yyjson_val *temp = yyjson_obj_get(root, "songs");
 	temp = yyjson_arr_get(temp,0);
 	
 	this->name = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(temp, "name")));
+
+	auto alobj = yyjson_obj_get(temp, "al");
+	std::string picurl = yyjson_get_str(yyjson_obj_get(alobj, "picUrl"));
+	auto [codePic, dataPic] = net_GETNew(picurl);
+	this->albumPic = dataPic;
 	
 	temp = yyjson_obj_get(temp,"ar");
 	temp = yyjson_arr_get(temp,0);
 	
 	this->artist = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(temp, "name")));
-	//ÏÈ½âÎöÕâÁ½¸öĞèÒªµÄ£¬Ê£ÏÂµÄµÈ»»ÉÏ¹Ù·½µÄapiÔÙ½âÎö
+	//å…ˆè§£æè¿™ä¸¤ä¸ªéœ€è¦çš„ï¼Œå‰©ä¸‹çš„ç­‰æ¢ä¸Šå®˜æ–¹çš„apiå†è§£æ
 	
 	yyjson_doc_free(doc);
 	
 	
 	cout<<this->id<<endl;
 	if(this->name.length()){
-		//Èç¹ûÓĞÒôÀÖ¾ÍÏÈÍ£Ö¹ÒôÀÖ
+		//å¦‚æœæœ‰éŸ³ä¹å°±å…ˆåœæ­¢éŸ³ä¹
 		mciSendString("close now_mp3", 0, 0, 0);
 	}
 	string path = "https://music.163.com/song/media/outer/url?id="+to_string(this->id)+".mp3";
@@ -40,11 +44,11 @@ void PlayingSong::SetMusic(int id){
 	this->getTotalTime_str();
 	this->getPosition_str();
     player.newVolume=player.getVolume();
-    //ÖØ»æµ×²¿×óÏÂ½ÇµÄ¸èÇúĞÅÏ¢
+    //é‡ç»˜åº•éƒ¨å·¦ä¸‹è§’çš„æ­Œæ›²ä¿¡æ¯
     InvalidateRect(HWNDM[H_PlayingInfo_m], NULL, TRUE);
-    //ÖØ»æ½ø¶ÈÌõÏà¹ØĞÅÏ¢
+    //é‡ç»˜è¿›åº¦æ¡ç›¸å…³ä¿¡æ¯
 	InvalidateRect(HWNDM[H_PlayingControl], NULL, TRUE);
-	//ÖØ»æÓÒÏÂ½Ç°´Å¥
+	//é‡ç»˜å³ä¸‹è§’æŒ‰é’®
 	InvalidateRect(HWNDM[H_PlayingSet_m], NULL, TRUE);
 }
 void PlayingSong::getTotalTime_str(){
@@ -53,7 +57,7 @@ void PlayingSong::getTotalTime_str(){
 	mciSendString("status now_mp3 length", sLength, 100, 0);
 	lLength = strtol(sLength, NULL, 10);
 	this->totalTime=lLength;
-	//¼ÆËã¸èÇú³¤¶È
+	//è®¡ç®—æ­Œæ›²é•¿åº¦
 	int mm = 0;
 	int ss;
 	lLength = lLength/1000;
@@ -62,7 +66,7 @@ void PlayingSong::getTotalTime_str(){
 		mm++;
 	}
 	ss=lLength;
-	//²»ÓÃformat£¬ºÃÏñÊÇÒòÎª±àÒëÆ÷²»Ö§³Öc++ 20
+	//ä¸ç”¨formatï¼Œå¥½åƒæ˜¯å› ä¸ºç¼–è¯‘å™¨ä¸æ”¯æŒc++ 20
 	this->totalTime_str = (mm<10?"0":"") + to_string(mm)+":" + (ss<10?"0":"") + to_string(ss);
 }
 void PlayingSong::getPosition_str(){
@@ -72,7 +76,7 @@ void PlayingSong::getPosition_str(){
 	lPosition = strtol(sPosition, NULL, 10);
 	this->position = lPosition;
 	//cout<<lPosition<<endl;
-	//¼ÆËãµ±Ç°²¥·ÅµÄ³¤¶È
+	//è®¡ç®—å½“å‰æ’­æ”¾çš„é•¿åº¦
 	int mm = 0;
 	int ss;
 	lPosition = lPosition/1000;
