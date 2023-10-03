@@ -26,12 +26,11 @@ void ToSearchMusic(string keyword){
 	GetWindowRect(HWNDM[H_SearchResultPage], &SearchResultPageRect);
 	int height = SearchResultPageRect.bottom - SearchResultPageRect.top;
 	int width = SearchResultPageRect.right - SearchResultPageRect.left;
-	char search_result[10240];
 	string url = "/search?limit=12&keywords=" + UrlEncode(GbkToUtf8(keyword.c_str()));
-	net_GET(url,search_result);
+	auto[code, data] = net_GET(url);
 	//cout<<Utf8ToGbk(search_result)<<endl;
 	
-	yyjson_doc *doc = yyjson_read(search_result, strlen(search_result), 0);
+	yyjson_doc *doc = yyjson_read(data.c_str(), data.size(), 0);
 	yyjson_val *root = yyjson_doc_get_root(doc);
 	yyjson_val *temp = yyjson_obj_get(root, "result");
 	temp = yyjson_obj_get(temp, "songs");

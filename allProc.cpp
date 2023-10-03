@@ -1,5 +1,7 @@
 #include "myhead.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 struct mouseState
 {
@@ -1071,6 +1073,37 @@ LRESULT CALLBACK IndexTitleProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 	return 0;
 }
 
+image load_image(const std::string& data)
+{
+	constexpr int channels = 4;
+	int x, y, channels_in_file;
+	auto buffer = stbi_load_from_memory(reinterpret_cast<const uint8_t*>(data.data()),
+		static_cast<int>(data.size()), &x, &y, &channels_in_file, channels);
+	assert(buffer);
+
+	image res{};
+	res.width = static_cast<size_t>(x);
+	res.height = static_cast<size_t>(y);
+	res.data.assign(reinterpret_cast<const char*>(buffer), res.width * res.height * channels);
+
+	stbi_image_free(buffer);
+	return res;
+}
+
+HBITMAP create_bitmap(const image& img)
+{
+	auto copy = img.data;
+
+	for (size_t i = 0; i < (img.width * img.height); ++i)
+	{
+		auto& r = copy[i * 4 + 0];
+		auto& b = copy[i * 4 + 2];
+		std::swap(r, b);
+	}
+
+	return CreateBitmap(static_cast<int>(img.width), static_cast<int>(img.height), 4, 8, copy.data());
+}
+
 //底部左侧播放中的歌曲信息
 LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
 	switch(Message) {
@@ -1093,12 +1126,16 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 				    //图片位置
 				    //gdi只支持显示bitmap图片，而网易云返回jpeg格式，此处需要将jpeg转为bitmap，没研究出来，所以没搞
 				    RoundRect(hdc,0,0,DPI(43),DPI(43),DPI(7),DPI(7));
-				    RECT TextRc;
-				    TextRc.left = 0;
-				    TextRc.top = 0;
-				    TextRc.right = DPI(43);
-				    TextRc.bottom = DPI(43);
-				    DrawText(hdc,"图片",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+					auto hBmp = create_bitmap(load_image(player.albumPic));
+					auto cdc = CreateCompatibleDC(hdc);
+					SelectObject(cdc, hBmp);
+					BITMAP bm;
+					GetObject(hBmp, sizeof(bm), &bm);
+					int nWidth = DPI(43);
+					int nHeight = DPI(43);
+					StretchBlt(hdc, 0, 0, nWidth, nHeight, cdc, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);//拉伸拷贝
+					DeleteObject(hBmp);
+					DeleteDC(cdc);
 				    
 				    //歌曲名
 				    HFONT hFont = CreateFont(DPI(19), 0, 0, 0, 500, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, TEXT("Microsoft YaHei"));

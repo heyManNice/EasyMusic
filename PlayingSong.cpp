@@ -3,21 +3,25 @@
 
 void PlayingSong::SetMusic(int id){
 	this->id = id;
-	char song_result[10240];
 	this->playing = 0;
 	//应该要在https://github.com/Binaryify/NeteaseCloudMusicApi
 	//中分析使用官方的api，构造一个官方的请求类，因为时间问题，此处使用了网上找的第三方代理接口
 
-	string url = "/song/detail?ids=" + to_string(this->id);
-	net_GET(url,song_result);
+	string url = "/song/detail?ids=" + to_string(this->id); 
+	auto [code, data] = net_GET(url);
 	//cout<<song_result;
 	
-	yyjson_doc *doc = yyjson_read(song_result, strlen(song_result), 0);
+	yyjson_doc *doc = yyjson_read(data.c_str(), data.size(), 0);
 	yyjson_val *root = yyjson_doc_get_root(doc);
 	yyjson_val *temp = yyjson_obj_get(root, "songs");
 	temp = yyjson_arr_get(temp,0);
 	
 	this->name = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(temp, "name")));
+
+	auto alobj = yyjson_obj_get(temp, "al");
+	std::string picurl = yyjson_get_str(yyjson_obj_get(alobj, "picUrl"));
+	auto [codePic, dataPic] = net_GETNew(picurl);
+	this->albumPic = dataPic;
 	
 	temp = yyjson_obj_get(temp,"ar");
 	temp = yyjson_arr_get(temp,0);

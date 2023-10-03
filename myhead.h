@@ -128,7 +128,8 @@ string GbkToUtf8(const char *src_str);
 std::string UrlEncode(const std::string& str);
 std::string UrlDecode(const std::string& str);
 //http get请求
-int net_GET(string url,char *result);
+std::tuple<int, std::string> net_GETNew(string url);
+std::tuple<int, std::string> net_GET(string url);
 
 //调音量面板的显示与隐藏
 void VolumePanel_show();
@@ -154,6 +155,12 @@ struct MenuItem{
 	map<int,MainIndexBTN> childItem; 
 };
 
+struct image
+{
+	size_t width;
+	size_t height;
+	std::string data;
+};
 
 //正在播放类
 class PlayingSong{
@@ -162,6 +169,7 @@ class PlayingSong{
 		string name;
 		string artist;
 		string album;
+		string albumPic;
 		string url;
 		string cover;
 		string lrc;
