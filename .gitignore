@@ -85,3 +85,6 @@ build/windows/x64/release/res/emf/heart_grey.emf
 build/windows/x64/release/res/emf/heart.emf
 build/windows/x64/release/res/emf/music.emf
 build/windows/x64/release/res/ico/netmusic_logoS.ico
+.vscode/compile_commands.json
+build/.deps/EasyMusic/windows/x64/release/tooltip/tooltip.cpp.obj.d
+build/.objs/EasyMusic/windows/x64/release/tooltip/tooltip.cpp.obj

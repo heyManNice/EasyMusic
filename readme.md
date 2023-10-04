@@ -42,6 +42,19 @@
 DEV-C++ 6.7.5
 
 目前换上了vscode + xmake + C/C++扩展的形式。体验还不错。比较坑的是得在开始菜单中找到Developer PowerShell for VS 2022，打开之后输入code启动的vscode才能正常运行。
+# 命名规则
+- 文件名应该全部小写，可以包含下划线或连字符，例如 `my_class.h` 或 `my-class.cc`
+
+- 类型名应该使用大写字母开头，每个单词首字母大写，不包含下划线，例如 `MyClass` 或 `MyEnum`
+
+- 变量名应该全部小写，单词之间用下划线连接，例如 `my_variable` 或 `my_local_variable`类的成员变量以下划线结尾，例如 `my_member_variable_`
+
+- 常量名应该以 `k` 开头，后面跟一个大写字母，然后是小写字母和下划线，例如 `kDaysInAWeek` 或 `kMaxBufferSize`
+
+- 函数名应该使用大写字母开头，每个单词首字母大写，不包含下划线，例如 `MyFunction` 或 `MyMethod`
+
+- 枚举、联合、宏和枚举值应该全部大写，单词之间用下划线连接，例如 `MY_ENUM` 或 `MY_MACRO`
+
 # 用到的Github开源项目
 [yyjson](https://github.com/ibireme/yyjson)  
 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
@@ -62,11 +75,9 @@ DEV-C++ 6.7.5
 res：资源文件  
 yyjson：yyjson解析库相关文件  
 SampleImage：readme.md的图片文件
-## 头文件
-EasyMusic.h：DEV-C++自动生成  
-EasyMusic_private.h：DEV-C++自动生成  
-FreeImage.h：解析图片  
-myhead.h：项目万用头（各种定义都放里面）
+tooltip：tooltip相关文件
+## 头文件  
+myhead.h：项目万用头（各种定义都放里面，后面逐步拆散）
 ## cpp文件
 allClass.cpp：窗口类注册  
 allProc.cpp：窗口事件循环过程  
@@ -78,9 +89,7 @@ main.cpp：主程序入口
 mytools.cpp：各种小工具  
 network.cpp：网络请求相关  
 PlayingSong.cpp：音乐播放器抽象类  
-tooltip.cpp：tootip鼠标悬浮提示框
 ## 其他文件
-~~EasyMusic.dev：DEV-C++的项目工程属性文件~~  
 xmake.lua：xmake的工程文件
 EasyMusic.ico：项目图标  
 Makefile.win：编译规则文件（DEV-C++自动生成）

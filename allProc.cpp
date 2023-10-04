@@ -2,6 +2,8 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include "tooltip/tooltip.h"
+Tooltip tooltip;
 
 struct mouseState
 {
@@ -274,7 +276,7 @@ LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show(L"关闭",pt.x,pt.y);
+						tooltip.Show_(L"关闭",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -293,7 +295,7 @@ LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 			break;
 		case WM_MOUSEHOVER:
 			{
-				if(!IsWindowVisible(HWNDM[H_tooltip])){
+				if(!IsWindowVisible(tooltip.hwnd_)){
 					SetTimer(hwnd,777,500,NULL);
 				}
 				btn_close.mouseHover = 1;
@@ -302,7 +304,7 @@ LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 			break;
 		case WM_MOUSELEAVE:
 			{
-				tooltip_hide();
+				tooltip.Hide_();
 				btn_close.mouseHover = 0;
 				InvalidateRect(hwnd, NULL, FALSE);
 			}
@@ -357,9 +359,9 @@ LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
 						if(IsZoomed(HWNDM[H_MAIN_WIN])){
-							tooltip_show(L"向下还原",pt.x,pt.y);
+							tooltip.Show_(L"向下还原",pt.x,pt.y);
 						}else{
-							tooltip_show(L"最大化",pt.x,pt.y);
+							tooltip.Show_(L"最大化",pt.x,pt.y);
 						}
 					}
 					KillTimer(hwnd,777);
@@ -378,7 +380,7 @@ LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 			}
 		case WM_MOUSEHOVER:
 			{
-				if(!IsWindowVisible(HWNDM[H_tooltip])){
+				if(!IsWindowVisible(tooltip.hwnd_)){
 					SetTimer(hwnd,777,500,NULL);
 				}
 				btn_tofullS.mouseHover = 1;
@@ -388,7 +390,7 @@ LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 		case WM_MOUSELEAVE:
 			{
 				btn_tofullS.mouseHover = 0;
-				tooltip_hide();
+				tooltip.Hide_();
 				InvalidateRect(hwnd, NULL, FALSE);
 				break;
 			}
@@ -459,7 +461,7 @@ LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPa
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show(L"最小化",pt.x,pt.y);
+						tooltip.Show_(L"最小化",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -477,7 +479,7 @@ LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPa
 			}
 		case WM_MOUSEHOVER:
 			{
-				if(!IsWindowVisible(HWNDM[H_tooltip])){
+				if(!IsWindowVisible(tooltip.hwnd_)){
 					SetTimer(hwnd,777,500,NULL);
 				}
 				btn_tosmallS.mouseHover = 1;
@@ -487,7 +489,7 @@ LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPa
 		case WM_MOUSELEAVE:
 			{
 				btn_tosmallS.mouseHover = 0;
-				tooltip_hide();
+				tooltip.Hide_();
 				InvalidateRect(hwnd, NULL, FALSE);
 				break;
 			}
@@ -536,7 +538,7 @@ LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 					POINT pt;
 					GetCursorPos(&pt);
 					if(hwnd == WindowFromPoint(pt)){
-						tooltip_show(L"mini模式(Ctrl+M)",pt.x,pt.y);
+						tooltip.Show_(L"mini模式(Ctrl+M)",pt.x,pt.y);
 					}
 					KillTimer(hwnd,777);
 				}
@@ -554,7 +556,7 @@ LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 			}
 		case WM_MOUSEHOVER:
 			{
-				if(!IsWindowVisible(HWNDM[H_tooltip])){
+				if(!IsWindowVisible(tooltip.hwnd_)){
 					SetTimer(hwnd,777,500,NULL);
 				}
 				btn_tomini.mouseHover = 1;
@@ -564,7 +566,7 @@ LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 		case WM_MOUSELEAVE:
 			{
 				btn_tomini.mouseHover = 0;
-				tooltip_hide();
+				tooltip.Hide_();
 				InvalidateRect(hwnd, NULL, FALSE);
 				break;
 			}
@@ -1427,7 +1429,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 				std::wstring tooltipcontext = (mm<10?L"0":L"") + std::to_wstring(mm)+L":" + (ss<10?L"0":L"") + std::to_wstring(ss);
 				POINT pt;
 				GetCursorPos(&pt);
-				tooltip_show(tooltipcontext,pt.x,pt.y);
+				tooltip.Show_(tooltipcontext,pt.x,pt.y);
 				
 				if(!ProgressMouseState.progress){
 					ProgressMouseState.progress=1;
@@ -1439,8 +1441,8 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					ProgressMouseState.progress=0;
 					InvalidateRect(hwnd, NULL, TRUE);
 					
-					if(IsWindowVisible(HWNDM[H_tooltip])){
-						tooltip_hide();
+					if(IsWindowVisible(tooltip.hwnd_)){
+						tooltip.Hide_();
 					}
 					return 0;
 				};
@@ -1465,7 +1467,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 						ProgressMouseState.btn_group[i]=1;
 						InvalidateRect(hwnd, NULL, TRUE);
 						SendMessageA(hwnd, WM_SETCURSOR,1,0);
-						if(!IsWindowVisible(HWNDM[H_tooltip])){
+						if(!IsWindowVisible(tooltip.hwnd_)){
 							ProgressMouseState.btn_groupTimerIndex=i;
 							SetTimer(hwnd,777,500,NULL);
 						}
@@ -1477,8 +1479,8 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 						ProgressMouseState.btn_group[i]=0;
 						InvalidateRect(hwnd, NULL, TRUE);
 						SendMessageA(hwnd, WM_SETCURSOR,2,0);
-						if(IsWindowVisible(HWNDM[H_tooltip])){
-							tooltip_hide();
+						if(IsWindowVisible(tooltip.hwnd_)){
+							tooltip.Hide_();
 						}
 						//cout<<i<<":"<<ProgressMouseState.btn_group[i]<<endl;
 						return 0;
@@ -1489,8 +1491,8 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 		}
 		case WM_LBUTTONDOWN: {
 			//隐藏tooltip
-			if(IsWindowVisible(HWNDM[H_tooltip])){
-				tooltip_hide();
+			if(IsWindowVisible(tooltip.hwnd_)){
+				tooltip.Hide_();
 			}
 			//进度条
 			if(ProgressMouseState.progress){
@@ -1588,7 +1590,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 								context = L"出Bug了";
 								break;
 						}
-						tooltip_show(context.c_str(),pt.x,pt.y);
+						tooltip.Show_(context.c_str(),pt.x,pt.y);
 						KillTimer(hwnd,777);
 					}
 					KillTimer(hwnd,777);
@@ -1755,7 +1757,7 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 						PlayingSetMouseState.btn_groupTimerIndex = i;
 						PlayingSetMouseState.btn_group[i] = 1;
 						SendMessageA(hwnd, WM_SETCURSOR,1,0);
-						if(!IsWindowVisible(HWNDM[H_tooltip])){
+						if(!IsWindowVisible(tooltip.hwnd_)){
 							PlayingSetMouseState.btn_groupTimerIndex=i;
 							SetTimer(hwnd,777,500,NULL);
 						}
@@ -1778,8 +1780,8 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 						PlayingSetMouseState.btn_group[i] = 0;
 						PlayingSetMouseState.btn_groupTimerIndex = -1;
 						SendMessageA(hwnd, WM_SETCURSOR,2,0);
-						if(IsWindowVisible(HWNDM[H_tooltip])){
-							tooltip_hide();
+						if(IsWindowVisible(tooltip.hwnd_)){
+							tooltip.Hide_();
 						}
 						switch (i) {
 							case 1:
@@ -1835,7 +1837,7 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 								context = L"出Bug了";
 								break;
 						}
-						tooltip_show(context.c_str(),pt.x,pt.y);
+						tooltip.Show_(context.c_str(),pt.x,pt.y);
 						KillTimer(hwnd,777);
 					}
 					KillTimer(hwnd,777);
@@ -1874,8 +1876,8 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 					//TODO
 					break;
 			}
-			if(IsWindowVisible(HWNDM[H_tooltip])){
-				tooltip_hide();
+			if(IsWindowVisible(tooltip.hwnd_)){
+				tooltip.Hide_();
 			}
 			break;
 		}
@@ -1942,8 +1944,8 @@ LRESULT CALLBACK VolumePanelProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM 
 						PlayingSetMouseState.btn_group[2]=0;
 						SendMessageA(hwnd, WM_SETCURSOR,2,0);
 						PlayingSetMouseState.btn_groupTimerIndex = -1;
-						if(IsWindowVisible(HWNDM[H_tooltip])){
-							tooltip_hide();
+						if(IsWindowVisible(tooltip.hwnd_)){
+							tooltip.Hide_();
 						}
 					}
 					int yPos = GET_Y_LPARAM(lParam);

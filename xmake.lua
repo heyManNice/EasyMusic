@@ -21,6 +21,7 @@ end
 target("EasyMusic")
     set_kind("binary")
     add_files("*.cpp")
+    add_files("tooltip/*.cpp")
 
     if is_plat("windows") then
         add_syslinks("gdi32", "dwmapi")

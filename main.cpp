@@ -1,4 +1,5 @@
 #include "myhead.h"
+#include "running_info/running_info.h"
 
 char appName[] = "很容易音乐";
 std::map<int,HWND> HWNDM;
@@ -7,11 +8,14 @@ double constDPI = 1;
 //由于没有时间去弄网易云官方的api，这里先使用来自cloud-music.pl-fe.cn
 std::string domainName = "cloud-music.pl-fe.cn";
 PlayingSong player;
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	SetProcessDPIAware();
 	constDPI = GetScreenScale();
-	
+	running_info.hInstance = hInstance;
+    running_info.hPrevInstance = hPrevInstance;
+    running_info.lpCmdLine = lpCmdLine;
+    running_info.nCmdShow = nCmdShow;
+
 	if(0){
 		AllocConsole();
 		FILE* stream;
@@ -25,13 +29,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 								CW_USEDEFAULT,DPI(1022),DPI(670),
 								NULL,NULL,hInstance,NULL);
 	cheackWin(hwnd);
-	
+	running_info.hMainWin = hwnd;
 	//通过dwm的小技巧 保留无边框窗口的阴影，不知道什么原理，官方文档也没说
 	const MARGINS shadow_on = { 0, 0, 0, 1 };
 	DwmExtendFrameIntoClientArea(hwnd, &shadow_on);
-	
-	//初始化tooltip工具
-	tooltip_tooltip(hInstance);
 	
 	HWNDM[H_MAIN_WIN]=hwnd;
 	//加载head栏
