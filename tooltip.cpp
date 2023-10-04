@@ -40,12 +40,12 @@ int tooltip_tooltip(HINSTANCE hInstance){
 	tooltipClass.hInstance	 = hInstance;
 	tooltipClass.style		 = CS_HREDRAW | CS_VREDRAW | CS_PARENTDC;
 	tooltipClass.hbrBackground = CreateSolidBrush(RGB(255,255,255));
-	tooltipClass.lpszClassName = "tooltip";
+	tooltipClass.lpszClassName = TEXT("tooltip");
 	if(!RegisterClassEx(&tooltipClass)) {
-		MessageBox(NULL, "窗口类注册失败!","错误!",MB_ICONEXCLAMATION|MB_OK);
+		MessageBoxW(NULL, L"窗口类注册失败!",L"错误!",MB_ICONEXCLAMATION|MB_OK);
 		PostQuitMessage(0);
 	}
-	HWNDM[H_tooltip] = CreateWindowEx(WS_EX_TOPMOST|WS_EX_TOOLWINDOW,"tooltip",NULL, 
+	HWNDM[H_tooltip] = CreateWindowExA(WS_EX_TOPMOST|WS_EX_TOOLWINDOW,"tooltip",NULL, 
 									WS_POPUP,0, 0,
 									0, 0,HWNDM[H_MAIN_WIN],
 									NULL, hInstance, NULL);

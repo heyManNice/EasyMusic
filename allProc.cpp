@@ -264,7 +264,7 @@ LRESULT CALLBACK closeProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 			break;
 		case WM_SETCURSOR:
 			{
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 			}
 			break;
@@ -394,7 +394,7 @@ LRESULT CALLBACK tofullSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPar
 			}
 		case WM_SETCURSOR:
 			{
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 				break;
 			}
@@ -493,7 +493,7 @@ LRESULT CALLBACK tosmallSProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPa
 			}
 		case WM_SETCURSOR:
 			{
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 				break;
 			}
@@ -570,7 +570,7 @@ LRESULT CALLBACK tominiProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 			}
 		case WM_SETCURSOR:
 			{
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 				break;
 			}
@@ -677,7 +677,7 @@ LRESULT CALLBACK logoProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 				logoTextRc.left = DDPI(28);
 				
 				//Rectangle(hdc,logoTextRc.left,logoTextRc.top,logoTextRc.right,logoTextRc.bottom);
-				DrawText(hdc,appName,-1,&logoTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+				DrawTextA(hdc,appName,-1,&logoTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 				
 				SelectObject(hdc,hOldFont);
 				DeleteObject(hFont);
@@ -841,7 +841,7 @@ LRESULT CALLBACK L_MainIndex_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 			}
 		case WM_SETCURSOR:
 			{
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 				break;
 			}
@@ -894,7 +894,7 @@ LRESULT CALLBACK L_MainIndex_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 				RECT TextRc;
 				CopyRect(&TextRc,&ps.rcPaint);
 				TextRc.left = DDPI(8);
-				DrawText(hdc,MainIndexList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				DrawTextA(hdc,MainIndexList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 			    //printf("%d\n",ctrlId);
 				SelectObject(hdc,holdpen);
 				DeleteObject(hpen);
@@ -949,7 +949,7 @@ LRESULT CALLBACK L_Mymusic_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPARA
 			}
 		case WM_SETCURSOR:
 			{
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 				break;
 			}
@@ -998,7 +998,7 @@ LRESULT CALLBACK L_Mymusic_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPARA
 				RECT TextRc;
 				CopyRect(&TextRc,&ps.rcPaint);
 				TextRc.left = DDPI(30);
-				DrawText(hdc,MyMusicItemList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				DrawTextA(hdc,MyMusicItemList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 				
 				//如果有图标就绘画图标
 				if(MyMusicItemList[ctrlId].emf){
@@ -1054,7 +1054,7 @@ LRESULT CALLBACK IndexTitleProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 				RECT TextRc;
 				CopyRect(&TextRc,&ps.rcPaint);
 				TextRc.left = DDPI(8);
-				DrawText(hdc,"我的音乐",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				DrawTextA(hdc,"我的音乐",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 			    SelectObject(hdc,holdpen);
 			    DeleteObject(hpen);
 			    SelectObject(hdc,holdFont);
@@ -1146,7 +1146,7 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 				    SongNameRc.top = DPI(3);
 				    SongNameRc.bottom = DPI(21);
 				    SongNameRc.right = ps.rcPaint.right-SongNameRc.left;
-				    DrawText(hdc,player.name.c_str(),-1,&SongNameRc,DT_VCENTER|DT_SINGLELINE);
+				    DrawTextA(hdc,player.name.c_str(),-1,&SongNameRc,DT_VCENTER|DT_SINGLELINE);
 				    
 				    //歌手名
 				    SelectObject(hdc,holdFont);
@@ -1160,7 +1160,7 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 				    ArtistNameRc.top = DPI(23);
 				    ArtistNameRc.bottom = DPI(38);
 				    ArtistNameRc.right = ps.rcPaint.right-ArtistNameRc.left;
-					DrawText(hdc,player.artist.c_str(),-1,&ArtistNameRc,DT_VCENTER|DT_SINGLELINE);
+					DrawTextA(hdc,player.artist.c_str(),-1,&ArtistNameRc,DT_VCENTER|DT_SINGLELINE);
 				    SelectObject(hdc,holdFont);
 				    DeleteObject(hFont);
 				    SelectObject(hdc, oldhBrush);
@@ -1205,11 +1205,11 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 				    TimeTextRc.bottom = DPI(67-10*2 - 4);
 				    TimeTextRc.right = DPI(27);
 				    //当前位置
-				    DrawText(hdc,player.position_str.c_str(),-1,&TimeTextRc,DT_VCENTER|DT_SINGLELINE);
+				    DrawTextA(hdc,player.position_str.c_str(),-1,&TimeTextRc,DT_VCENTER|DT_SINGLELINE);
 				    //总时间
 					TimeTextRc.left = ps.rcPaint.right - DPI(27);
 				    TimeTextRc.right = ps.rcPaint.right;
-				    DrawText(hdc,player.totalTime_str.c_str(),-1,&TimeTextRc,DT_VCENTER|DT_SINGLELINE);
+				    DrawTextA(hdc,player.totalTime_str.c_str(),-1,&TimeTextRc,DT_VCENTER|DT_SINGLELINE);
 				    
 					//进度条
 					int progressWidth = ps.rcPaint.right - DPI(27+5)*2;
@@ -1384,7 +1384,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 						    lyricTextRc.bottom = btn_width;
 						    lyricTextRc.right = thisRight;
 						    //当前位置
-						    DrawText(hdc,"词",-1,&lyricTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+						    DrawTextA(hdc,"词",-1,&lyricTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 							break;
 							}
 						default:
@@ -1424,7 +1424,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					mm++;
 				}
 				ss=newPosition;
-				wstring tooltipcontext = (mm<10?L"0":L"") + to_wstring(mm)+L":" + (ss<10?L"0":L"") + to_wstring(ss);
+				std::wstring tooltipcontext = (mm<10?L"0":L"") + std::to_wstring(mm)+L":" + (ss<10?L"0":L"") + std::to_wstring(ss);
 				POINT pt;
 				GetCursorPos(&pt);
 				tooltip_show(tooltipcontext,pt.x,pt.y);
@@ -1533,12 +1533,12 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 		}
 		case WM_SETCURSOR:{
 						if(wParam==1){
-							HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+							HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 							SetCursor(cur);
 							return 0;
 						}
 						if(wParam==2){
-							HCURSOR cur = LoadCursorA(NULL,IDC_ARROW);
+							HCURSOR cur = LoadCursor(NULL,IDC_ARROW);
 							SetCursor(cur);
 							return 0;
 						}
@@ -1562,7 +1562,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					if(ProgressMouseState.btn_group[ProgressMouseState.btn_groupTimerIndex]){
 						POINT pt;
 						GetCursorPos(&pt);
-						wstring context;
+						std::wstring context;
 						switch (ProgressMouseState.btn_groupTimerIndex) {
 							case 0:
 								context = L"顺序播放";
@@ -1815,7 +1815,7 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 					if(PlayingSetMouseState.btn_group[PlayingSetMouseState.btn_groupTimerIndex]){
 						POINT pt;
 						GetCursorPos(&pt);
-						wstring context;
+						std::wstring context;
 						switch (PlayingSetMouseState.btn_groupTimerIndex) {
 							case 0:
 								context = L"打开播放列表";
@@ -1881,12 +1881,12 @@ LRESULT CALLBACK PlayingSetProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 		}
 		case WM_SETCURSOR:{
 			if(wParam==1){
-				HCURSOR cur = LoadCursorA(NULL,IDC_HAND);
+				HCURSOR cur = LoadCursor(NULL,IDC_HAND);
 				SetCursor(cur);
 				return 0;
 			}
 			if(wParam==2){
-				HCURSOR cur = LoadCursorA(NULL,IDC_ARROW);
+				HCURSOR cur = LoadCursor(NULL,IDC_ARROW);
 				SetCursor(cur);
 				return 0;
 			}
@@ -2060,8 +2060,8 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 				TextRc.right = ps.rcPaint.right - padding;
 				TextRc.bottom = padding+DPI(16);
 				//Rectangle(hdc,TextRc.left,TextRc.top,TextRc.right,TextRc.bottom);
-				string mytext = "搜索 "+SearchResultPage.keyword;
-			    DrawText(hdc,mytext.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				std::string mytext = "搜索 "+SearchResultPage.keyword;
+			    DrawTextA(hdc,mytext.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 			    
 			    //播放全部
 			    if(SearchResultPage.PlayALL){
@@ -2079,7 +2079,7 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 				hFont = CreateFont(DPI(20), 0, 0, 0, 500, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, TEXT("Microsoft YaHei"));
 				DeleteObject((HFONT)SelectObject(hdc, hFont));
 				SetTextColor(hdc, RGB(255,255,255));
-			    DrawText(hdc,"播放全部",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+			    DrawTextA(hdc,"播放全部",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 			    
 			    DeleteObject((HBRUSH)SelectObject(hdc,CreateSolidBrush(RGB(255,255,255))));
 			    POINT vertex[3];
@@ -2122,7 +2122,7 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 				TextRc.right = padding+DPI(140)+DownloadAll_x;
 				TextRc.bottom = padding+DPI(74);
 				SetTextColor(hdc, RGB(89,89,89));
-			    DrawText(hdc,"下载全部",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+			    DrawTextA(hdc,"下载全部",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 			    
 			    hpen = CreatePen(PS_SOLID, DPIW(1), RGB(89,89,89));
 				DeleteObject((HPEN)SelectObject(hdc, hpen));
@@ -2170,19 +2170,19 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 					TextRc.bottom = TitleTextRc.bottom;
 					switch (i) {
 						case 4:
-							DrawText(hdc,"音乐标题",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,"音乐标题",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 5:
-							DrawText(hdc,"歌手",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,"歌手",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 6:
-							DrawText(hdc,"专辑",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,"专辑",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 7:
-							DrawText(hdc,"时长",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,"时长",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 8:
-							DrawText(hdc,"热度",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,"热度",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						default:
 							//TODO
@@ -2299,9 +2299,9 @@ LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					switch (i) {
 						case 1:{
 								long long theid = SearchItemInfo[ctrlId-1].id;
-								string idText = (theid<10?"0":"")+to_string(theid);
+								std::string idText = (theid<10?"0":"")+std::to_string(theid);
 								SetTextColor(hdc, RGB(200,200,200));
-								DrawText(hdc,idText.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+								DrawTextA(hdc,idText.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 								SetTextColor(hdc, RGB(50,50,50));
 								break;
 							}
@@ -2331,22 +2331,22 @@ LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 								}
 							
 						case 4:
-							DrawText(hdc,SearchItemInfo[ctrlId-1].title.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
+							DrawTextA(hdc,SearchItemInfo[ctrlId-1].title.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
 							break;
 						case 5:
-							DrawText(hdc,SearchItemInfo[ctrlId-1].artist.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
+							DrawTextA(hdc,SearchItemInfo[ctrlId-1].artist.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
 							break;
 						case 6:
-							DrawText(hdc,SearchItemInfo[ctrlId-1].album.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
+							DrawTextA(hdc,SearchItemInfo[ctrlId-1].album.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
 							break;
 						case 7:
 							SetTextColor(hdc, RGB(145,145,146));
-							DrawText(hdc,SearchItemInfo[ctrlId-1].length.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,SearchItemInfo[ctrlId-1].length.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							SetTextColor(hdc, RGB(50,50,50));
 							break;
 						case 8:
 							//热度还没做好
-							DrawText(hdc,"----------",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextA(hdc,"----------",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						default:
 							//TODO
@@ -2367,7 +2367,7 @@ LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 			int ctrlId = GetDlgCtrlID(hwnd);
 			player.SetMusic(SearchItemInfo[ctrlId-1].songId);
 			player.Play();
-			cout<<ctrlId<<":"<<SearchItemInfo[ctrlId-1].songId<<endl;
+			std::cout<<ctrlId<<":"<<SearchItemInfo[ctrlId-1].songId<<std::endl;
 			break;
 			}
 		case WM_DESTROY: {

@@ -3,9 +3,9 @@
 #include "myhead.h"
 #include <commctrl.h>
 
-map<int,SearchItemInfo__struct> SearchItemInfo;
+std::map<int,SearchItemInfo__struct> SearchItemInfo;
 
-void ToSearchMusic(string keyword){
+void ToSearchMusic(std::string keyword){
 	int padding = DPI(28);
 	int margin_top = DPI(4);
 	
@@ -26,7 +26,7 @@ void ToSearchMusic(string keyword){
 	GetWindowRect(HWNDM[H_SearchResultPage], &SearchResultPageRect);
 	int height = SearchResultPageRect.bottom - SearchResultPageRect.top;
 	int width = SearchResultPageRect.right - SearchResultPageRect.left;
-	string url = "/search?limit=12&keywords=" + UrlEncode(GbkToUtf8(keyword.c_str()));
+	std::string url = "/search?limit=12&keywords=" + UrlEncode(GbkToUtf8(keyword.c_str()));
 	auto[code, data] = net_GET(url);
 	//cout<<Utf8ToGbk(search_result)<<endl;
 	
@@ -56,7 +56,7 @@ void ToSearchMusic(string keyword){
 			mm++;
 		}
 		ss=duration;
-		SearchItemInfo[idx].length = (mm<10?"0":"") + to_string(mm)+":" + (ss<10?"0":"") + to_string(ss);
+		SearchItemInfo[idx].length = (mm<10?"0":"") + std::to_string(mm)+":" + (ss<10?"0":"") + std::to_string(ss);
 		
 	}
 	SearchResultPage.itemNum=idx;
@@ -131,7 +131,7 @@ int Loadhead(HINSTANCE hInstance,HWND hwnd){
 	HWNDM[H_MYHEAD]=MainTitle;
 	
 	//输入框外边框
-	HWND Edit_out_hwnm = CreateWindowEx(0, "Edit_out_class",NULL,
+	HWND Edit_out_hwnm = CreateWindowExA(0, "Edit_out_class",NULL,
 										WS_CHILD | WS_VISIBLE,DDPI(296.66), DDPI(12.33),
 										DPI(200), DDPI(33.33),MainTitle,
 										NULL,(HINSTANCE)GetWindowLongPtr(MainTitle, GWLP_HINSTANCE),NULL);
@@ -140,11 +140,11 @@ int Loadhead(HINSTANCE hInstance,HWND hwnd){
 	SetWindowRgn(Edit_out_hwnm, hRgn, TRUE);
 	UpdateWindow(Edit_out_hwnm);
 	
-	HWND hwnd_search = CreateWindowEx(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DDPI(6.66), DDPI(4.5), DDPI(23.33), DDPI(23.33), Edit_out_hwnm, NULL, (HINSTANCE)GetWindowLongPtr(Edit_out_hwnm, GWLP_HINSTANCE), NULL);
+	HWND hwnd_search = CreateWindowExA(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DDPI(6.66), DDPI(4.5), DDPI(23.33), DDPI(23.33), Edit_out_hwnm, NULL, (HINSTANCE)GetWindowLongPtr(Edit_out_hwnm, GWLP_HINSTANCE), NULL);
 	SetWindowLongPtr(hwnd_search, GWLP_WNDPROC, (LONG_PTR)searchProc);
 	//输入框
 	
-	HWND Edit = CreateWindowEx(0, "EDIT",NULL,
+	HWND Edit = CreateWindowExA(0, "EDIT",NULL,
 								WS_CHILD | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL | ES_WANTRETURN,DDPI(30.66), DDPI(8),
 								DPI(120), DDPI(23),Edit_out_hwnm,
 								(HMENU)23,(HINSTANCE)GetWindowLongPtr(Edit_out_hwnm, GWLP_HINSTANCE),NULL);
@@ -162,7 +162,7 @@ int Loadhead(HINSTANCE hInstance,HWND hwnd){
 
 	
 	//logo
-	HWND hWndLogo = CreateWindowEx(0, "STATIC", "myLogo", WS_CHILD | WS_VISIBLE, DPI(15), DPI(15), DDPI(133), DPI(33), MainTitle, NULL, (HINSTANCE)GetWindowLongPtr(MainTitle, GWLP_HINSTANCE), NULL);
+	HWND hWndLogo = CreateWindowExA(0, "STATIC", "myLogo", WS_CHILD | WS_VISIBLE, DPI(15), DPI(15), DDPI(133), DPI(33), MainTitle, NULL, (HINSTANCE)GetWindowLongPtr(MainTitle, GWLP_HINSTANCE), NULL);
 	SetWindowLongPtr(hWndLogo, GWLP_WNDPROC, (LONG_PTR)logoProc);
 	
 	
@@ -175,16 +175,16 @@ int Loadhead(HINSTANCE hInstance,HWND hwnd){
 	
 	
 	//这种方法感觉非常不好，我觉得像是底部控制音乐按钮那种绘制方式更优美
-	HWND hwnd_close = CreateWindowEx(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DPI(140), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
+	HWND hwnd_close = CreateWindowExA(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DPI(140), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
 	SetWindowLongPtr(hwnd_close, GWLP_WNDPROC, (LONG_PTR)closeProc);
 	
-	HWND hwnd_tofullS = CreateWindowEx(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DDPI(106.33), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
+	HWND hwnd_tofullS = CreateWindowExA(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DDPI(106.33), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
 	SetWindowLongPtr(hwnd_tofullS, GWLP_WNDPROC, (LONG_PTR)tofullSProc);
 	
-	HWND hwnd_tosmallS = CreateWindowEx(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DPI(70), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
+	HWND hwnd_tosmallS = CreateWindowExA(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DPI(70), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
 	SetWindowLongPtr(hwnd_tosmallS, GWLP_WNDPROC, (LONG_PTR)tosmallSProc);
 	
-	HWND hwnd_tomini = CreateWindowEx(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DDPI(35.33), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
+	HWND hwnd_tomini = CreateWindowExA(0, "STATIC", "clsoe_btn", WS_CHILD | WS_VISIBLE, DDPI(35.33), 0, DPI(37), DPI(37), hwnd_myOP_Btn, NULL, (HINSTANCE)GetWindowLongPtr(hwnd_myOP_Btn, GWLP_HINSTANCE), NULL);
 	SetWindowLongPtr(hwnd_tomini, GWLP_WNDPROC, (LONG_PTR)tominiProc);
 	return 0;
 }

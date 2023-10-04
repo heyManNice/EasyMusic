@@ -1,12 +1,12 @@
 #include "myhead.h"
 
-map<int,MainIndexBTN> MainIndexList;
+std::map<int,MainIndexBTN> MainIndexList;
 
-map<int,MainIndexBTN> MyMusicItemList;
+std::map<int,MainIndexBTN> MyMusicItemList;
 
-map<int,MenuItem> MenuItemList;
+std::map<int,MenuItem> MenuItemList;
 
-int addMainIndexItem(string text){
+int addMainIndexItem(std::string text){
 	MainIndexBTN temp;
 	temp.text = text;
 	int num = MainIndexList.size()+1;
@@ -14,7 +14,7 @@ int addMainIndexItem(string text){
 	MainIndexList[num]=temp;
 	return num;
 };
-int addMyMusicItem(string text,LPCSTR icon){
+int addMyMusicItem(std::string text,LPCSTR icon){
 	MainIndexBTN temp;
 	temp.text = text;
 	temp.emf = GetEnhMetaFileA(icon);

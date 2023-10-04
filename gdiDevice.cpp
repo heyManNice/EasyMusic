@@ -1,7 +1,7 @@
 #include "myhead.h"
 
-map<string,HPEN> myPEN;
-map<string,HBRUSH> myBRUSH;
+std::map<std::string,HPEN> myPEN;
+std::map<std::string,HBRUSH> myBRUSH;
 
 //常用的笔刷老是创建和删除感觉总不好，试试保存这些笔刷
 //千万要删除创建的资源，我曾经因为忘记删除，导致gdi崩溃了

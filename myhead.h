@@ -18,8 +18,6 @@
 #include <wininet.h>
 
 
-using namespace std;
-
 //主窗口事件
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 //head栏事件
@@ -104,14 +102,14 @@ int tooltip_hide();
 int init_gdiDevice();
 
 //字符集转换
-string Utf8ToGbk(const char *src_str);
-string GbkToUtf8(const char *src_str);
+std::string Utf8ToGbk(const char *src_str);
+std::string GbkToUtf8(const char *src_str);
 //url编码解码
 std::string UrlEncode(const std::string& str);
 std::string UrlDecode(const std::string& str);
 //http get请求
-std::tuple<int, std::string> net_GETNew(string url);
-std::tuple<int, std::string> net_GET(string url);
+std::tuple<int, std::string> net_GETNew(std::string url);
+std::tuple<int, std::string> net_GET(std::string url);
 
 //调音量面板的显示与隐藏
 void VolumePanel_show();
@@ -125,7 +123,7 @@ struct MainIndexBTN{
 	int id;
 	int mouseHover = 0;
 	int checked = 0;
-	string text = "";
+	std::string text = "";
 	HENHMETAFILE emf;
 };
 
@@ -134,7 +132,7 @@ struct MainIndexBTN{
 struct MenuItem{
 	HWND hwnd;
 	int height;
-	map<int,MainIndexBTN> childItem; 
+	std::map<int,MainIndexBTN> childItem; 
 };
 
 struct image
@@ -148,15 +146,15 @@ struct image
 class PlayingSong{
 	public:
 		int id;
-		string name;
-		string artist;
-		string album;
-		string albumPic;
-		string url;
-		string cover;
-		string lrc;
-		string totalTime_str;
-		string position_str;
+		std::string name;
+		std::string artist;
+		std::string album;
+		std::string albumPic;
+		std::string url;
+		std::string cover;
+		std::string lrc;
+		std::string totalTime_str;
+		std::string position_str;
 		long totalTime;
 		long position;
 		int time;
@@ -175,7 +173,7 @@ class PlayingSong{
 };
 
 struct SearchResultPage_struct{
-	string keyword;
+	std::string keyword;
 	int PlayALL = 0;
 	int DownloadALL = 0;
 	int itemNum = 0;
@@ -200,30 +198,30 @@ struct SearchItemInfo__struct{
 	int checked = 0;
 	int isLove = 0;
 	int isDownload = 0;
-	string title;
-	string artist;
-	string album;
-	string length;
+	std::string title;
+	std::string artist;
+	std::string album;
+	std::string length;
 	int heat;
 	RECT itemRect;
 };
 
 
 //导出的全局变量
-extern map<int,HWND> HWNDM;
-extern map<int,HBITMAP> BITM;
+extern std::map<int,HWND> HWNDM;
+extern std::map<int,HBITMAP> BITM;
 extern double constDPI;
 extern char appName[];
-extern map<int,MainIndexBTN> MainIndexList;
-extern map<string,HPEN> myPEN;
-extern map<string,HBRUSH> myBRUSH;
-extern map<int,MenuItem> MenuItemList;
-extern map<int,MainIndexBTN> MyMusicItemList;
-extern string domainName;
+extern std::map<int,MainIndexBTN> MainIndexList;
+extern std::map<std::string,HPEN> myPEN;
+extern std::map<std::string,HBRUSH> myBRUSH;
+extern std::map<int,MenuItem> MenuItemList;
+extern std::map<int,MainIndexBTN> MyMusicItemList;
+extern std::string domainName;
 extern PlayingSong player;
 extern SearchResultPage_struct SearchResultPage;
 extern SearchItemWidth_struct SearchItemWidth;
-extern map<int,SearchItemInfo__struct> SearchItemInfo;
+extern std::map<int,SearchItemInfo__struct> SearchItemInfo;
 
 //定义窗口管理常量
 #define H_MAIN_WIN  	1
