@@ -17,6 +17,8 @@
 #include <mmsystem.h>
 #include <wininet.h>
 
+#include "utils.h"
+
 
 //主窗口事件
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
@@ -100,11 +102,6 @@ int tooltip_hide();
 
 //初始化绘图设备
 int init_gdiDevice();
-
-//字符集转换
-std::string Utf8ToGbk(std::string str);
-std::string Utf8ToGbk(const char *src_str);
-std::string GbkToUtf8(const char *src_str);
 
 //调音量面板的显示与隐藏
 void VolumePanel_show();
