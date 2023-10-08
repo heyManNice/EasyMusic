@@ -1386,7 +1386,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 						    lyricTextRc.bottom = btn_width;
 						    lyricTextRc.right = thisRight;
 						    //当前位置
-						    DrawTextA(hdc,"词",-1,&lyricTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+						    DrawTextW(hdc,L"词",-1,&lyricTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 							break;
 							}
 						default:
