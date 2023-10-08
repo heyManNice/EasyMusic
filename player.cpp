@@ -8,7 +8,7 @@ void PlayingSong::SetMusic(int id){
 	//应该要在https://github.com/Binaryify/NeteaseCloudMusicApi
 	//中分析使用官方的api，构造一个官方的请求类，因为时间问题，此处使用了网上找的第三方代理接口
 
-	std::string url = "/song/detail?ids=" + std::to_string(this->id); 
+	std::string url = std::format("/song/detail?ids={}", this->id);
 	auto [code, data] = net_GET(url);
 	//cout<<song_result;
 
@@ -65,8 +65,7 @@ void PlayingSong::getTotalTime_str(){
 		mm++;
 	}
 	ss=lLength;
-	//不用format，好像是因为编译器不支持c++ 20
-	this->totalTime_str = (mm<10?"0":"") + std::to_string(mm)+":" + (ss<10?"0":"") + std::to_string(ss);
+	this->totalTime_str = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 }
 void PlayingSong::getPosition_str(){
 	wchar_t sPosition[100];
@@ -84,7 +83,7 @@ void PlayingSong::getPosition_str(){
 		mm++;
 	}
 	ss=lPosition;
-	this->position_str = (mm<10?"0":"") + std::to_string(mm)+":" + (ss<10?"0":"") + std::to_string(ss);
+	this->position_str = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 }
 
 void PlayingSong::Play(){

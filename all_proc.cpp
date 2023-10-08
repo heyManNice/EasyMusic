@@ -2301,7 +2301,7 @@ LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					switch (i) {
 						case 1:{
 								long long theid = SearchItemInfo[ctrlId-1].id;
-								std::string idText = (theid<10?"0":"")+std::to_string(theid);
+								std::string idText = std::format("{}{}", (theid < 10 ? "0" : ""), theid);
 								SetTextColor(hdc, RGB(200,200,200));
 								DrawTextA(hdc,idText.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 								SetTextColor(hdc, RGB(50,50,50));

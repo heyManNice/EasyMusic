@@ -60,7 +60,7 @@ void ToSearchMusic(std::string keyword){
 			mm++;
 		}
 		ss = duration;
-		SearchItemInfo[i].length = (mm < 10 ? "0" : "") + std::to_string(mm) + ":" + (ss < 10 ? "0" : "") + std::to_string(ss);
+		SearchItemInfo[i].length = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 	}
 	SearchResultPage.itemNum = songresult.songCount;
 
