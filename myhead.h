@@ -18,7 +18,7 @@
 #include <wininet.h>
 
 #include "utils.h"
-
+#include "player_service.h"
 
 //主窗口事件
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
@@ -162,6 +162,8 @@ class PlayingSong{
 		void PlayFromPosition(long position);
 		void setVolume(int Vnum);
 		int getVolume();
+
+		PlayerService ps;
 };
 
 struct SearchResultPage_struct{

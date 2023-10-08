@@ -32,13 +32,9 @@ void PlayingSong::SetMusic(int id){
 	//先解析这两个需要的，剩下的等换上官方的api再解析
 	
 	//std::cout<<this->id<<endl;
-	if(this->name.length()){
-		//如果有音乐就先停止音乐
-		mciSendStringW(L"close now_mp3", 0, 0, 0);
-	}
-	std::wstring path = L"https://music.163.com/song/media/outer/url?id="+std::to_wstring(this->id)+L".mp3";
-    std::wstring command = L"open \"" + path + L"\" type mpegvideo alias now_mp3";
-    mciSendStringW(command.c_str(), NULL, 0, NULL);
+	this->ps.Close();
+	auto path = std::format(LR"(https://music.163.com/song/media/outer/url?id={}.mp3)", this->id);
+	this->ps.OpenUrl(path);
     
 	this->getTotalTime_str();
 	this->getPosition_str();
@@ -51,10 +47,7 @@ void PlayingSong::SetMusic(int id){
 	InvalidateRect(HWNDM[H_PlayingSet_m], NULL, TRUE);
 }
 void PlayingSong::getTotalTime_str(){
-	wchar_t sLength[100];
-	long lLength;
-	mciSendStringW(L"status now_mp3 length", sLength, 100, 0);
-	lLength = wcstol(sLength, NULL, 10);
+	long lLength = this->ps.getTotalTime();
 	this->totalTime=lLength;
 	//计算歌曲长度
 	int mm = 0;
@@ -69,9 +62,7 @@ void PlayingSong::getTotalTime_str(){
 }
 void PlayingSong::getPosition_str(){
 	wchar_t sPosition[100];
-	long lPosition;
-	mciSendStringW(L"status now_mp3 position", sPosition, 100, 0);
-	lPosition = wcstol(sPosition, NULL, 10);
+	long lPosition = this->ps.getPosition();
 	this->position = lPosition;
 	//cout<<lPosition<<endl;
 	//计算当前播放的长度
@@ -87,14 +78,14 @@ void PlayingSong::getPosition_str(){
 }
 
 void PlayingSong::Play(){
-	mciSendStringW(L"play now_mp3", NULL, 0, NULL);
+	this->ps.Play();
 	if(this->playing == 0){
 		this->playing = 1;
 		SetTimer(HWNDM[H_PlayingControl],163,1000,NULL);
 	}
 }
 void PlayingSong::Pause(){
-	mciSendStringW(L"Pause now_mp3", NULL, 0, NULL);
+	this->ps.Pause();
 	this->playing = 0;
 	KillTimer(HWNDM[H_PlayingControl],163);
 }
@@ -108,19 +99,15 @@ void PlayingSong::ProgressLoop(){
 	//cout<<"1"<<endl;
 }
 void PlayingSong::PlayFromPosition(long position){
-	std::wstring command = L"play now_mp3 from "+std::to_wstring(position)+L" to "+std::to_wstring(this->totalTime);
-	mciSendStringW(command.c_str(), NULL, 0, NULL);
+	this->ps.PlayFromPosition(position);
 	if(this->playing == 0){
 		this->playing = 1;
 		SetTimer(HWNDM[H_PlayingControl],163,1000,NULL);
 	}
 }
 int PlayingSong::getVolume(){
-	wchar_t volume[100]; 
-	mciSendStringW(L"status now_mp3 volume", volume, sizeof(volume), 0);
-	return _wtoi(volume);
+	return this->ps.GetVolume();
 }
 void PlayingSong::setVolume(int Vnum){
-	std::wstring command = L"setaudio now_mp3 volume to "+std::to_wstring(Vnum);
-	mciSendStringW(command.c_str(), 0, 0, 0);
+	this->ps.SetVolume(Vnum);
 }
