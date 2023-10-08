@@ -12,7 +12,7 @@ add_rules("mode.debug", "mode.release")
 
 set_encodings("source:utf-8")
 
-add_requires("stb", "cpr", "yyjson")
+add_requires("stb", "cpr", "nlohmann_json")
 
 if is_mode("release") and is_plat("windows") then
     add_requires("vc-ltl5")
@@ -27,7 +27,7 @@ target("EasyMusic")
         add_syslinks("gdi32", "dwmapi")
     end
 
-    add_packages("stb", "cpr", "yyjson")
+    add_packages("stb", "cpr", "nlohmann_json")
     if is_mode("release") and is_plat("windows") then
         add_packages("vc-ltl5")
     end
