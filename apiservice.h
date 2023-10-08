@@ -36,10 +36,7 @@ namespace apiservice {
 
 	struct SignalSong
 	{
-		std::string name;
-		uint32_t id;
-		Artists artists;
-		Album album;
+		Song song;
 		std::string albumPicUrl;
 	};
 	struct SongResult

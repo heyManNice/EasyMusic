@@ -21,10 +21,12 @@ void apiservice::from_json(const nlohmann::json& j, Song& song_) {
 }
 
 void apiservice::from_json(const nlohmann::json& j, SignalSong& song_) {
-	song_.name = j["name"].get<std::string>();
-	song_.id = j["id"].get<uint32_t>();
-	song_.artists = j["ar"].get<Artists>();
-	song_.album = j["al"].get<Album>();
+	Song song__{};
+	song__.name = j["name"].get<std::string>();
+	song__.id = j["id"].get<uint32_t>();
+	song__.artists = j["ar"].get<Artists>();
+	song__.album = j["al"].get<Album>();
+	song_.song = song__;
 	song_.albumPicUrl = j["al"]["picUrl"].get<std::string>();
 }
 

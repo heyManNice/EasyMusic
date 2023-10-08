@@ -17,11 +17,11 @@ void PlayingSong::SetMusic(int id){
 	{
 		//TODO: exit
 	}
-	auto& song = songresult.song;
+	auto& song = songresult.song.song;
 	
 	this->name = Utf8ToGbk(song.name);
 
-	auto [codePic, dataPic] = net_GETNew(song.albumPicUrl);
+	auto [codePic, dataPic] = net_GETNew(songresult.song.albumPicUrl);
 	if (codePic)
 	{
 		//TODO: exit
