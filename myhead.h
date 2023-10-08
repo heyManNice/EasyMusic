@@ -102,6 +102,7 @@ int tooltip_hide();
 int init_gdiDevice();
 
 //字符集转换
+std::string Utf8ToGbk(std::string str);
 std::string Utf8ToGbk(const char *src_str);
 std::string GbkToUtf8(const char *src_str);
 //url编码解码

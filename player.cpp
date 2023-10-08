@@ -1,5 +1,6 @@
 #include "myhead.h"
 
+#include "apiservice.h"
 
 void PlayingSong::SetMusic(int id){
 	this->id = id;
@@ -10,27 +11,25 @@ void PlayingSong::SetMusic(int id){
 	std::string url = "/song/detail?ids=" + std::to_string(this->id); 
 	auto [code, data] = net_GET(url);
 	//cout<<song_result;
-	
-	yyjson_doc *doc = yyjson_read(data.c_str(), data.size(), 0);
-	yyjson_val *root = yyjson_doc_get_root(doc);
-	yyjson_val *temp = yyjson_obj_get(root, "songs");
-	temp = yyjson_arr_get(temp,0);
-	
-	this->name = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(temp, "name")));
 
-	auto alobj = yyjson_obj_get(temp, "al");
-	std::string picurl = yyjson_get_str(yyjson_obj_get(alobj, "picUrl"));
-	auto [codePic, dataPic] = net_GETNew(picurl);
+	auto songresult = apiservice::parse<apiservice::SongResult>(data);
+	if (songresult.code != 200)
+	{
+		//TODO: exit
+	}
+	auto& song = songresult.song;
+	
+	this->name = Utf8ToGbk(song.name);
+
+	auto [codePic, dataPic] = net_GETNew(song.albumPicUrl);
+	if (codePic)
+	{
+		//TODO: exit
+	}
 	this->albumPic = dataPic;
 	
-	temp = yyjson_obj_get(temp,"ar");
-	temp = yyjson_arr_get(temp,0);
-	
-	this->artist = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(temp, "name")));
+	this->artist = Utf8ToGbk(song.artists[0].name);
 	//先解析这两个需要的，剩下的等换上官方的api再解析
-	
-	yyjson_doc_free(doc);
-	
 	
 	//std::cout<<this->id<<endl;
 	if(this->name.length()){
