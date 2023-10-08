@@ -1,7 +1,7 @@
 #include "myhead.h"
 #include "running_info/running_info.h"
 
-char appName[] = "很容易音乐";
+std::wstring appName = L"很容易音乐";
 std::map<int,HWND> HWNDM;
 std::map<int,HBITMAP> BITM;
 double constDPI = 1;
@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	init_wc_Class(hInstance);
 	init_gdiDevice();
-	HWND hwnd = CreateWindowExA(WS_EX_OVERLAPPEDWINDOW,"Mainwin",appName,
+	HWND hwnd = CreateWindowExW(WS_EX_OVERLAPPEDWINDOW,TEXT(L"Mainwin"),appName.c_str(),
 								WS_VISIBLE | WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,CW_USEDEFAULT,
 								CW_USEDEFAULT,DPI(1022),DPI(670),
 								NULL,NULL,hInstance,NULL);
