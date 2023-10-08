@@ -166,8 +166,6 @@ class Player{
 		int getVolume();
 		void UpdateTotalTime();
 		void UpdatePosition();
-
-		PlayerService ps;
 };
 
 struct SearchResultPage_struct{

@@ -34,9 +34,10 @@ void Player::SetMusic(int id){
 	//先解析这两个需要的，剩下的等换上官方的api再解析
 	
 	//std::cout<<this->id<<endl;
-	this->ps.Close();
+	auto ps = PlayerService::GetInstance();
+	ps->Close();
 	auto path = std::format(LR"(https://music.163.com/song/media/outer/url?id={}.mp3)", this->id);
-	this->ps.OpenUrl(path);
+	ps->OpenUrl(path);
     
 	this->UpdateTotalTime();
 	this->UpdatePosition();
@@ -49,7 +50,8 @@ void Player::SetMusic(int id){
 	InvalidateRect(HWNDM[H_PlayingSet_m], NULL, TRUE);
 }
 void Player::UpdateTotalTime(){
-	long lLength = this->ps.getTotalTime();
+	auto ps = PlayerService::GetInstance();
+	long lLength = ps->getTotalTime();
 	this->totalTime=lLength;
 	std::chrono::hh_mm_ss time{ std::chrono::milliseconds(lLength) };
 	auto mm = time.minutes().count() + time.hours().count() * 60;
@@ -57,7 +59,8 @@ void Player::UpdateTotalTime(){
 	this->totalTime_str = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 }
 void Player::UpdatePosition(){
-	long lPosition = this->ps.getPosition();
+	auto ps = PlayerService::GetInstance();
+	long lPosition = ps->getPosition();
 	this->position = lPosition;
 	std::chrono::hh_mm_ss time{ std::chrono::milliseconds(lPosition) };
 	auto mm = time.minutes().count() + time.hours().count() * 60;
@@ -66,14 +69,16 @@ void Player::UpdatePosition(){
 }
 
 void Player::Play(){
-	this->ps.Play();
+	auto ps = PlayerService::GetInstance();
+	ps->Play();
 	if(this->playing == 0){
 		this->playing = 1;
 		SetTimer(HWNDM[H_PlayingControl],163,1000,NULL);
 	}
 }
 void Player::Pause(){
-	this->ps.Pause();
+	auto ps = PlayerService::GetInstance();
+	ps->Pause();
 	this->playing = 0;
 	KillTimer(HWNDM[H_PlayingControl],163);
 }
@@ -87,15 +92,18 @@ void Player::ProgressLoop(){
 	//cout<<"1"<<endl;
 }
 void Player::PlayFromPosition(long position){
-	this->ps.PlayFromPosition(position);
+	auto ps = PlayerService::GetInstance();
+	ps->PlayFromPosition(position);
 	if(this->playing == 0){
 		this->playing = 1;
 		SetTimer(HWNDM[H_PlayingControl],163,1000,NULL);
 	}
 }
 int Player::getVolume(){
-	return this->ps.GetVolume();
+	auto ps = PlayerService::GetInstance();
+	return ps->GetVolume();
 }
 void Player::setVolume(int Vnum){
-	this->ps.SetVolume(Vnum);
+	auto ps = PlayerService::GetInstance();
+	ps->SetVolume(Vnum);
 }

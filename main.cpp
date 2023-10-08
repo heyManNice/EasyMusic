@@ -7,7 +7,7 @@ std::map<int,HBITMAP> BITM;
 double constDPI = 1;
 //由于没有时间去弄网易云官方的api，这里先使用来自cloud-music.pl-fe.cn
 std::string domainName = "cloud-music.pl-fe.cn";
-PlayingSong player;
+Player player;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	SetProcessDPIAware();
 	constDPI = GetScreenScale();

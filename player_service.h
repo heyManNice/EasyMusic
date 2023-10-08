@@ -3,9 +3,26 @@
 
 #include <string>
 #include <string_view>
+#include <mutex>
+
+class PlayerService;
+namespace {
+	static std::once_flag _psflag;
+	static PlayerService* _psinstance;
+}
 
 class PlayerService {
 public:
+	static PlayerService* GetInstance()
+	{
+		std::call_once(_psflag, []() {
+			_psinstance = new PlayerService();
+			});
+		return _psinstance;
+	}
+
+	~PlayerService() {};
+
 	void Play();
 	void Pause();
 	void PlayFromPosition(long position);
@@ -22,8 +39,12 @@ public:
 	inline uint8_t GetVolume() { return this->m_volume; };
 
 private:
+	PlayerService() {};
+	PlayerService(const PlayerService&) = delete;
+	PlayerService(PlayerService&&) = delete;
+
 	bool m_isPlaying = false;
-	uint8_t m_volume = 0;
+	uint8_t m_volume = 100;
 };
 
 
