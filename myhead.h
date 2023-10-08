@@ -105,12 +105,6 @@ int init_gdiDevice();
 std::string Utf8ToGbk(std::string str);
 std::string Utf8ToGbk(const char *src_str);
 std::string GbkToUtf8(const char *src_str);
-//url编码解码
-std::string UrlEncode(const std::string& str);
-std::string UrlDecode(const std::string& str);
-//http get请求
-std::tuple<int, std::string> net_GETNew(std::string url);
-std::tuple<int, std::string> net_GET(std::string url);
 
 //调音量面板的显示与隐藏
 void VolumePanel_show();

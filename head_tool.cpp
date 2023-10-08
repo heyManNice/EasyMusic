@@ -28,19 +28,19 @@ void ToSearchMusic(std::string keyword){
 	GetWindowRect(HWNDM[H_SearchResultPage], &SearchResultPageRect);
 	int height = SearchResultPageRect.bottom - SearchResultPageRect.top;
 	int width = SearchResultPageRect.right - SearchResultPageRect.left;
-	std::string url = "/search?limit=12&keywords=" + UrlEncode(GbkToUtf8(keyword.c_str()));
-	auto[code, data] = net_GET(url);
-	//cout<<Utf8ToGbk(search_result)<<endl;
-
-	auto songresult = apiservice::parse<apiservice::SearchResult>(data);
-	if (songresult.code != 200)
+	auto[code, songresult] = apiservice::SearchSong(keyword);
+	if (code)
+	{
+		//TODO: exit
+	}
+	if (songresult->code != 200)
 	{
 		//TODO: exit
 	}
 
-	for (auto i = 0; i < songresult.songs.size(); ++i)
+	for (auto i = 0; i < songresult->songs.size(); ++i)
 	{
-		auto& song = songresult.songs[i];
+		auto& song = songresult->songs[i];
 		SearchItemInfo[i].itemRect.left = padding;
 		SearchItemInfo[i].itemRect.top = padding + DPI(124) + i * DPI(34);
 		SearchItemInfo[i].itemRect.right = width - padding;
@@ -62,7 +62,7 @@ void ToSearchMusic(std::string keyword){
 		ss = duration;
 		SearchItemInfo[i].length = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 	}
-	SearchResultPage.itemNum = songresult.songCount;
+	SearchResultPage.itemNum = songresult->songs.size();
 
 	for(int i = 0;i<SearchItemInfo.size();i++){
 		if(i>30){

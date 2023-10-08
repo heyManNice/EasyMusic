@@ -8,20 +8,20 @@ void PlayingSong::SetMusic(int id){
 	//应该要在https://github.com/Binaryify/NeteaseCloudMusicApi
 	//中分析使用官方的api，构造一个官方的请求类，因为时间问题，此处使用了网上找的第三方代理接口
 
-	std::string url = std::format("/song/detail?ids={}", this->id);
-	auto [code, data] = net_GET(url);
-	//cout<<song_result;
-
-	auto songresult = apiservice::parse<apiservice::SongResult>(data);
-	if (songresult.code != 200)
+	auto [code, songresult] = apiservice::GetSong(this->id);
+	if (code)
 	{
 		//TODO: exit
 	}
-	auto& song = songresult.song.song;
+	if (songresult->code != 200)
+	{
+		//TODO: exit
+	}
+	auto& song = songresult->song.song;
 	
 	this->name = Utf8ToGbk(song.name);
 
-	auto [codePic, dataPic] = net_GETNew(songresult.song.albumPicUrl);
+	auto [codePic, dataPic] = apiservice::HTTP_Get(songresult->song.albumPicUrl);
 	if (codePic)
 	{
 		//TODO: exit
