@@ -135,7 +135,7 @@ struct image
 };
 
 //正在播放类
-class PlayingSong{
+class Player{
 	public:
 		int id;
 		std::string name;
@@ -147,21 +147,25 @@ class PlayingSong{
 		std::string lrc;
 		std::string totalTime_str;
 		std::string position_str;
+
 		long totalTime;
 		long position;
 		int time;
 		int playing;
+
 		int newVolume;
 		int theVolumeBeforeMute;
 		void SetMusic(int id);
+		void ProgressLoop();
+
 		void Play();
 		void Pause();
-		void getTotalTime_str();
-		void getPosition_str();
-		void ProgressLoop();
 		void PlayFromPosition(long position);
 		void setVolume(int Vnum);
+
 		int getVolume();
+		void UpdateTotalTime();
+		void UpdatePosition();
 
 		PlayerService ps;
 };
@@ -212,7 +216,7 @@ extern std::map<std::string,HBRUSH> myBRUSH;
 extern std::map<int,MenuItem> MenuItemList;
 extern std::map<int,MainIndexBTN> MyMusicItemList;
 extern std::string domainName;
-extern PlayingSong player;
+extern Player player;
 extern SearchResultPage_struct SearchResultPage;
 extern SearchItemWidth_struct SearchItemWidth;
 extern std::map<int,SearchItemInfo__struct> SearchItemInfo;

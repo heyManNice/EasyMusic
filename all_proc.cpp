@@ -1507,7 +1507,7 @@ LRESULT CALLBACK PlayingControlProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 				}
 				long newPosition = Pmousex/(progressWidth*1.0)*player.totalTime;
 				player.PlayFromPosition(newPosition);
-				player.getPosition_str();
+				player.UpdatePosition();
 				InvalidateRect(HWNDM[H_PlayingControl], NULL, TRUE);
 				return 0;
 			}

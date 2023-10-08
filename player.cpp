@@ -1,8 +1,10 @@
 #include "myhead.h"
 
+#include <chrono>
+
 #include "apiservice.h"
 
-void PlayingSong::SetMusic(int id){
+void Player::SetMusic(int id){
 	this->id = id;
 	this->playing = 0;
 	//应该要在https://github.com/Binaryify/NeteaseCloudMusicApi
@@ -36,8 +38,8 @@ void PlayingSong::SetMusic(int id){
 	auto path = std::format(LR"(https://music.163.com/song/media/outer/url?id={}.mp3)", this->id);
 	this->ps.OpenUrl(path);
     
-	this->getTotalTime_str();
-	this->getPosition_str();
+	this->UpdateTotalTime();
+	this->UpdatePosition();
     player.newVolume=player.getVolume();
     //重绘底部左下角的歌曲信息
     InvalidateRect(HWNDM[H_PlayingInfo_m], NULL, TRUE);
@@ -46,68 +48,54 @@ void PlayingSong::SetMusic(int id){
 	//重绘右下角按钮
 	InvalidateRect(HWNDM[H_PlayingSet_m], NULL, TRUE);
 }
-void PlayingSong::getTotalTime_str(){
+void Player::UpdateTotalTime(){
 	long lLength = this->ps.getTotalTime();
 	this->totalTime=lLength;
-	//计算歌曲长度
-	int mm = 0;
-	int ss;
-	lLength = lLength/1000;
-	while(lLength>59){
-		lLength-=60;
-		mm++;
-	}
-	ss=lLength;
+	std::chrono::hh_mm_ss time{ std::chrono::milliseconds(lLength) };
+	auto mm = time.minutes().count() + time.hours().count() * 60;
+	auto ss = time.seconds().count();
 	this->totalTime_str = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 }
-void PlayingSong::getPosition_str(){
-	wchar_t sPosition[100];
+void Player::UpdatePosition(){
 	long lPosition = this->ps.getPosition();
 	this->position = lPosition;
-	//cout<<lPosition<<endl;
-	//计算当前播放的长度
-	int mm = 0;
-	int ss;
-	lPosition = lPosition/1000;
-	while(lPosition>59){
-		lPosition-=60;
-		mm++;
-	}
-	ss=lPosition;
+	std::chrono::hh_mm_ss time{ std::chrono::milliseconds(lPosition) };
+	auto mm = time.minutes().count() + time.hours().count() * 60;
+	auto ss = time.seconds().count();
 	this->position_str = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 }
 
-void PlayingSong::Play(){
+void Player::Play(){
 	this->ps.Play();
 	if(this->playing == 0){
 		this->playing = 1;
 		SetTimer(HWNDM[H_PlayingControl],163,1000,NULL);
 	}
 }
-void PlayingSong::Pause(){
+void Player::Pause(){
 	this->ps.Pause();
 	this->playing = 0;
 	KillTimer(HWNDM[H_PlayingControl],163);
 }
 
-void PlayingSong::ProgressLoop(){
+void Player::ProgressLoop(){
 	if(!this->playing){
 		KillTimer(HWNDM[H_PlayingControl],163);
 	}
-	this->getPosition_str();
+	this->UpdatePosition();
 	InvalidateRect(HWNDM[H_PlayingControl], NULL, TRUE);
 	//cout<<"1"<<endl;
 }
-void PlayingSong::PlayFromPosition(long position){
+void Player::PlayFromPosition(long position){
 	this->ps.PlayFromPosition(position);
 	if(this->playing == 0){
 		this->playing = 1;
 		SetTimer(HWNDM[H_PlayingControl],163,1000,NULL);
 	}
 }
-int PlayingSong::getVolume(){
+int Player::getVolume(){
 	return this->ps.GetVolume();
 }
-void PlayingSong::setVolume(int Vnum){
+void Player::setVolume(int Vnum){
 	this->ps.SetVolume(Vnum);
 }
