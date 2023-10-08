@@ -2062,8 +2062,7 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 				TextRc.right = ps.rcPaint.right - padding;
 				TextRc.bottom = padding+DPI(16);
 				//Rectangle(hdc,TextRc.left,TextRc.top,TextRc.right,TextRc.bottom);
-				std::string mytext = "搜索 "+SearchResultPage.keyword;
-			    DrawTextA(hdc,mytext.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+			    DrawTextW(hdc, std::format(L"搜索 {}", SearchResultPage.keyword).c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 			    
 			    //播放全部
 			    if(SearchResultPage.PlayALL){
@@ -2081,7 +2080,7 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 				hFont = CreateFont(DPI(20), 0, 0, 0, 500, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, TEXT("Microsoft YaHei"));
 				DeleteObject((HFONT)SelectObject(hdc, hFont));
 				SetTextColor(hdc, RGB(255,255,255));
-			    DrawTextA(hdc,"播放全部",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+			    DrawTextW(hdc, TEXT(L"播放全部"),-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 			    
 			    DeleteObject((HBRUSH)SelectObject(hdc,CreateSolidBrush(RGB(255,255,255))));
 			    POINT vertex[3];
@@ -2124,7 +2123,7 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 				TextRc.right = padding+DPI(140)+DownloadAll_x;
 				TextRc.bottom = padding+DPI(74);
 				SetTextColor(hdc, RGB(89,89,89));
-			    DrawTextA(hdc,"下载全部",-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+			    DrawTextW(hdc,TEXT(L"下载全部"),-1,&TextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
 			    
 			    hpen = CreatePen(PS_SOLID, DPIW(1), RGB(89,89,89));
 				DeleteObject((HPEN)SelectObject(hdc, hpen));

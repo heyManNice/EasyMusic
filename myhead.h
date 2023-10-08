@@ -169,7 +169,7 @@ class Player{
 };
 
 struct SearchResultPage_struct{
-	std::string keyword;
+	std::wstring keyword;
 	int PlayALL = 0;
 	int DownloadALL = 0;
 	int itemNum = 0;
