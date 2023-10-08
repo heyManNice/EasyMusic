@@ -72,7 +72,7 @@ namespace apiservice {
 	std::tuple<int, SongResultPtr> GetSong(int id);
 
 	typedef std::shared_ptr<impl::SearchResult> SearchResultPtr;
-	std::tuple<int, SearchResultPtr> SearchSong(std::string_view keyword, int limit = 12);
+	std::tuple<int, SearchResultPtr> SearchSong(const std::string& keyword, int limit = 12);
 
 }
 
