@@ -679,7 +679,7 @@ LRESULT CALLBACK logoProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 				logoTextRc.left = DDPI(28);
 				
 				//Rectangle(hdc,logoTextRc.left,logoTextRc.top,logoTextRc.right,logoTextRc.bottom);
-				DrawTextA(hdc,appName,-1,&logoTextRc,DT_CENTER|DT_VCENTER|DT_SINGLELINE);
+				DrawTextW(hdc,appName.c_str(), -1, &logoTextRc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 				
 				SelectObject(hdc,hOldFont);
 				DeleteObject(hFont);
@@ -896,7 +896,7 @@ LRESULT CALLBACK L_MainIndex_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPA
 				RECT TextRc;
 				CopyRect(&TextRc,&ps.rcPaint);
 				TextRc.left = DDPI(8);
-				DrawTextA(hdc,MainIndexList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				DrawTextW(hdc,MainIndexList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 			    //printf("%d\n",ctrlId);
 				SelectObject(hdc,holdpen);
 				DeleteObject(hpen);
@@ -1000,7 +1000,7 @@ LRESULT CALLBACK L_Mymusic_btnProc(HWND hwnd, UINT Message, WPARAM wParam, LPARA
 				RECT TextRc;
 				CopyRect(&TextRc,&ps.rcPaint);
 				TextRc.left = DDPI(30);
-				DrawTextA(hdc,MyMusicItemList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				DrawTextW(hdc,MyMusicItemList[ctrlId].text.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 				
 				//如果有图标就绘画图标
 				if(MyMusicItemList[ctrlId].emf){
@@ -2301,7 +2301,7 @@ LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 					switch (i) {
 						case 1:{
 								long long theid = SearchItemInfo[ctrlId-1].id;
-								std::string idText = (theid<10?"0":"")+std::to_string(theid);
+								std::string idText = std::format("{}{}", (theid < 10 ? "0" : ""), theid);
 								SetTextColor(hdc, RGB(200,200,200));
 								DrawTextA(hdc,idText.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 								SetTextColor(hdc, RGB(50,50,50));

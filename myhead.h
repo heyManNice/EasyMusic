@@ -102,6 +102,7 @@ int tooltip_hide();
 int init_gdiDevice();
 
 //字符集转换
+std::string Utf8ToGbk(std::string str);
 std::string Utf8ToGbk(const char *src_str);
 std::string GbkToUtf8(const char *src_str);
 //url编码解码
@@ -123,7 +124,7 @@ struct MainIndexBTN{
 	int id;
 	int mouseHover = 0;
 	int checked = 0;
-	std::string text = "";
+	std::wstring text = L"";
 	HENHMETAFILE emf;
 };
 
@@ -211,7 +212,7 @@ struct SearchItemInfo__struct{
 extern std::map<int,HWND> HWNDM;
 extern std::map<int,HBITMAP> BITM;
 extern double constDPI;
-extern char appName[];
+extern std::wstring appName;
 extern std::map<int,MainIndexBTN> MainIndexList;
 extern std::map<std::string,HPEN> myPEN;
 extern std::map<std::string,HBRUSH> myBRUSH;

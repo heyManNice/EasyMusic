@@ -10,9 +10,10 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 find_package(Stb REQUIRED)
 find_package(cpr CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}")
 
-add_executable(client WIN32 "${SRC_DIR}/main.cpp" "${SRC_DIR}/allClass.cpp" "${SRC_DIR}/allProc.cpp" "${SRC_DIR}/foottool.cpp" "${SRC_DIR}/gdiDevice.cpp" "${SRC_DIR}/headtool.cpp" "${SRC_DIR}/Lmenu.cpp" "${SRC_DIR}/mytools.cpp" "${SRC_DIR}/network.cpp" "${SRC_DIR}/PlayingSong.cpp" "${SRC_DIR}/tooltip.cpp" "${SRC_DIR}/yyjson/yyjson.c")
+add_executable(client WIN32 "${SRC_DIR}/main.cpp" "${SRC_DIR}/all_class.cpp" "${SRC_DIR}/all_proc.cpp" "${SRC_DIR}/foot_tool.cpp" "${SRC_DIR}/gdi_device.cpp" "${SRC_DIR}/head_tool.cpp" "${SRC_DIR}/mytools.cpp" "${SRC_DIR}/navigation_bar.cpp" "${SRC_DIR}/network.cpp" "${SRC_DIR}/player.cpp" "${SRC_DIR}/apiservice.cpp" "${SRC_DIR}/tooltip/tooltip.cpp" "${SRC_DIR}/yyjson/yyjson.c")
 target_include_directories(client PRIVATE ${Stb_INCLUDE_DIR})
-target_link_libraries(client PRIVATE cpr::cpr)
+target_link_libraries(client PRIVATE dwmapi WinMM cpr::cpr nlohmann_json::nlohmann_json)

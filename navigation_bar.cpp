@@ -6,7 +6,7 @@ std::map<int,MainIndexBTN> MyMusicItemList;
 
 std::map<int,MenuItem> MenuItemList;
 
-int addMainIndexItem(std::string text){
+int addMainIndexItem(std::wstring text){
 	MainIndexBTN temp;
 	temp.text = text;
 	int num = MainIndexList.size()+1;
@@ -14,7 +14,7 @@ int addMainIndexItem(std::string text){
 	MainIndexList[num]=temp;
 	return num;
 };
-int addMyMusicItem(std::string text,LPCSTR icon){
+int addMyMusicItem(std::wstring text,LPCSTR icon){
 	MainIndexBTN temp;
 	temp.text = text;
 	temp.emf = GetEnhMetaFileA(icon);
@@ -51,11 +51,11 @@ int LoadLmenu(HINSTANCE hInstance,HWND hwnd){
 	MenuItemList[1].hwnd = H_MainIndex;
 	MenuItemList[1].childItem = MainIndexList;
 
-	addMainIndexItem("发现音乐");
-	addMainIndexItem("博客");
-	addMainIndexItem("视频");
-	addMainIndexItem("关注");
-	addMainIndexItem("私人FM");
+	addMainIndexItem(L"发现音乐");
+	addMainIndexItem(L"博客");
+	addMainIndexItem(L"视频");
+	addMainIndexItem(L"关注");
+	addMainIndexItem(L"私人FM");
 	for(long long i=1;i<=MainIndexList.size();i++){
 		MainIndexList[i].hwnd = CreateWindowW( L"MainIndex_Btn",L"主功能菜单按钮",WS_VISIBLE | WS_CHILD,
 							    0,(i-1)*DPI(39),LMS_width-DPI(12),
@@ -76,12 +76,12 @@ int LoadLmenu(HINSTANCE hInstance,HWND hwnd){
 							    (HINSTANCE)GetWindowLongPtr(MenuItemList[2].hwnd, GWLP_HINSTANCE),NULL);
 	SetWindowLongPtr(H_mymusic_title, GWLP_WNDPROC, (LONG_PTR)IndexTitleProc);
 	MenuItemList[2].childItem = MyMusicItemList;
-	addMyMusicItem("我喜欢的音乐",".\\res\\emf\\heart.emf");
-	addMyMusicItem("本地与下载",".\\res\\emf\\download.emf");
-	addMyMusicItem("最近播放",".\\res\\emf\\clock.emf");
-	addMyMusicItem("我的音乐云盘",".\\res\\emf\\cloud.emf");
-	addMyMusicItem("我的播客",".\\res\\emf\\music.emf");
-	addMyMusicItem("我的收藏",".\\res\\emf\\collect.emf");
+	addMyMusicItem(L"我喜欢的音乐",".\\res\\emf\\heart.emf");
+	addMyMusicItem(L"本地与下载",".\\res\\emf\\download.emf");
+	addMyMusicItem(L"最近播放",".\\res\\emf\\clock.emf");
+	addMyMusicItem(L"我的音乐云盘",".\\res\\emf\\cloud.emf");
+	addMyMusicItem(L"我的播客",".\\res\\emf\\music.emf");
+	addMyMusicItem(L"我的收藏",".\\res\\emf\\collect.emf");
 	for(long long i=1;i<=MyMusicItemList.size();i++){
 		MyMusicItemList[i].hwnd = CreateWindowW( L"myMusicItem_Btn",L"我的音乐功能按钮",WS_VISIBLE | WS_CHILD,
 							    0,(i-1)*DPI(39)+DPI(27),LMS_width-DPI(12),

@@ -3,6 +3,8 @@
 #include "myhead.h"
 #include <commctrl.h>
 
+#include "apiservice.h"
+
 std::map<int,SearchItemInfo__struct> SearchItemInfo;
 
 void ToSearchMusic(std::string keyword){
@@ -29,37 +31,39 @@ void ToSearchMusic(std::string keyword){
 	std::string url = "/search?limit=12&keywords=" + UrlEncode(GbkToUtf8(keyword.c_str()));
 	auto[code, data] = net_GET(url);
 	//cout<<Utf8ToGbk(search_result)<<endl;
-	
-	yyjson_doc *doc = yyjson_read(data.c_str(), data.size(), 0);
-	yyjson_val *root = yyjson_doc_get_root(doc);
-	yyjson_val *temp = yyjson_obj_get(root, "result");
-	temp = yyjson_obj_get(temp, "songs");
-	size_t idx, max;
-	yyjson_val *song;
-	yyjson_arr_foreach(temp, idx, max, song) {
-		SearchItemInfo[idx].itemRect.left = padding;
-		SearchItemInfo[idx].itemRect.top = padding+DPI(124)+idx*DPI(34);
-		SearchItemInfo[idx].itemRect.right = width - padding;
-		SearchItemInfo[idx].itemRect.bottom = padding+DPI(158)+idx*DPI(34);
-		
-		SearchItemInfo[idx].id = idx+1;
-		SearchItemInfo[idx].title = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(song,"name")));
-		SearchItemInfo[idx].songId = yyjson_get_int(yyjson_obj_get(song,"id"));
-		SearchItemInfo[idx].artist = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(yyjson_arr_get(yyjson_obj_get(song,"artists"),0),"name")));
-		SearchItemInfo[idx].album = Utf8ToGbk(yyjson_get_str(yyjson_obj_get(yyjson_obj_get(song,"album"),"name")));
-		
+
+	auto songresult = apiservice::parse<apiservice::SearchResult>(data);
+	if (songresult.code != 200)
+	{
+		//TODO: exit
+	}
+
+	for (auto i = 0; i < songresult.songs.size(); ++i)
+	{
+		auto& song = songresult.songs[i];
+		SearchItemInfo[i].itemRect.left = padding;
+		SearchItemInfo[i].itemRect.top = padding + DPI(124) + i * DPI(34);
+		SearchItemInfo[i].itemRect.right = width - padding;
+		SearchItemInfo[i].itemRect.bottom = padding + DPI(158) + i * DPI(34);
+
+		SearchItemInfo[i].id = i + 1;
+		SearchItemInfo[i].title = Utf8ToGbk(song.name);
+		SearchItemInfo[i].songId = song.id;
+		SearchItemInfo[i].artist = Utf8ToGbk(song.artists[0].name);
+		SearchItemInfo[i].album = Utf8ToGbk(song.album.name);
+
 		int mm = 0;
 		int ss;
-		int duration = yyjson_get_int(yyjson_obj_get(song,"duration"))/1000;
-		while(duration>59){
-			duration-=60;
+		int duration = song.duration / 1000;
+		while (duration > 59) {
+			duration -= 60;
 			mm++;
 		}
-		ss=duration;
-		SearchItemInfo[idx].length = (mm<10?"0":"") + std::to_string(mm)+":" + (ss<10?"0":"") + std::to_string(ss);
-		
+		ss = duration;
+		SearchItemInfo[i].length = std::format("{}{}:{}{}", (mm < 10 ? "0" : ""), mm, (ss < 10 ? "0" : ""), ss);
 	}
-	SearchResultPage.itemNum=idx;
+	SearchResultPage.itemNum = songresult.songCount;
+
 	for(int i = 0;i<SearchItemInfo.size();i++){
 		if(i>30){
 			//防止意外出现死循环，手动退出
