@@ -61,9 +61,9 @@ std::tuple<int, apiservice::SongResultPtr> apiservice::GetSong(int id)
 	return std::make_tuple<int, SongResultPtr>(0, std::make_shared<apiservice::impl::SongResult>(songresult));
 }
 
-std::tuple<int, apiservice::SearchResultPtr> apiservice::SearchSong(const std::string& keyword, int limit)
+std::tuple<int, apiservice::SearchResultPtr> apiservice::SearchSong(const std::wstring& keyword, int limit)
 {
-	std::string url = std::format("{}/search?limit={}&keywords={}", APIDOMAIN, limit, cpr::util::urlEncode(keyword));
+	std::string url = std::format("{}/search?limit={}&keywords={}", APIDOMAIN, limit, URLEncode(keyword));
 	auto [code, data] = HTTP_Get(url);
 	if (code)
 		return std::make_tuple<int, SearchResultPtr>((int)code, nullptr);

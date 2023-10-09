@@ -74,8 +74,7 @@ namespace apiservice {
 	std::tuple<int, SongResultPtr> GetSong(int id);
 
 	typedef std::shared_ptr<impl::SearchResult> SearchResultPtr;
-	std::tuple<int, SearchResultPtr> SearchSong(const std::string& keyword, int limit = 12);
-	inline std::tuple<int, SearchResultPtr> SearchSong(const std::wstring& keyword, int limit = 12) { return SearchSong(WideStringToString(keyword), limit); };
+	std::tuple<int, SearchResultPtr> SearchSong(const std::wstring& keyword, int limit = 12);
 }
 
 #endif // !EASYMUSIC_APISERVICE_H_
