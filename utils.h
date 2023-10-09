@@ -7,7 +7,6 @@
 #include "utfconvert.h"
 
 //字符集转换
-std::string URLEncode(std::wstring originalText);
-std::string WideStringToString(const std::wstring& wstr);
+std::string URLEncode(const std::wstring& originalText);
 
 #endif // !EASYMUSIC_UTILS_H_
