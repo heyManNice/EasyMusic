@@ -21,7 +21,7 @@ void Player::SetMusic(int id){
 	}
 	auto& song = songresult->song.song;
 	
-	this->name = Utf8ToGbk(song.name);
+	this->name = utf8_to_utf16le(song.name);
 
 	auto [codePic, dataPic] = apiservice::HTTP_Get(songresult->song.albumPicUrl);
 	if (codePic)
@@ -30,7 +30,7 @@ void Player::SetMusic(int id){
 	}
 	this->albumPic = dataPic;
 	
-	this->artist = Utf8ToGbk(song.artists[0].name);
+	this->artist = utf8_to_utf16le(song.artists[0].name);
 	//先解析这两个需要的，剩下的等换上官方的api再解析
 	
 	//std::cout<<this->id<<endl;

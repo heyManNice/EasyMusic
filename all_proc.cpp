@@ -1148,7 +1148,7 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 				    SongNameRc.top = DPI(3);
 				    SongNameRc.bottom = DPI(21);
 				    SongNameRc.right = ps.rcPaint.right-SongNameRc.left;
-				    DrawTextA(hdc,player.name.c_str(),-1,&SongNameRc,DT_VCENTER|DT_SINGLELINE);
+				    DrawTextW(hdc, (const wchar_t*)player.name.c_str(),-1,&SongNameRc,DT_VCENTER|DT_SINGLELINE);
 				    
 				    //歌手名
 				    SelectObject(hdc,holdFont);
@@ -1162,7 +1162,7 @@ LRESULT CALLBACK footLProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam
 				    ArtistNameRc.top = DPI(23);
 				    ArtistNameRc.bottom = DPI(38);
 				    ArtistNameRc.right = ps.rcPaint.right-ArtistNameRc.left;
-					DrawTextA(hdc,player.artist.c_str(),-1,&ArtistNameRc,DT_VCENTER|DT_SINGLELINE);
+					DrawTextW(hdc, (const wchar_t*)player.artist.c_str(),-1,&ArtistNameRc,DT_VCENTER|DT_SINGLELINE);
 				    SelectObject(hdc,holdFont);
 				    DeleteObject(hFont);
 				    SelectObject(hdc, oldhBrush);
@@ -2332,13 +2332,13 @@ LRESULT CALLBACK SearchItemInfoProc(HWND hwnd, UINT Message, WPARAM wParam, LPAR
 								}
 							
 						case 4:
-							DrawTextA(hdc,SearchItemInfo[ctrlId-1].title.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
+							DrawTextW(hdc,(const wchar_t*)SearchItemInfo[ctrlId-1].title.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
 							break;
 						case 5:
-							DrawTextA(hdc,SearchItemInfo[ctrlId-1].artist.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
+							DrawTextW(hdc, (const wchar_t*)SearchItemInfo[ctrlId-1].artist.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
 							break;
 						case 6:
-							DrawTextA(hdc,SearchItemInfo[ctrlId-1].album.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
+							DrawTextW(hdc, (const wchar_t*)SearchItemInfo[ctrlId-1].album.c_str(),-1,&TextRc,DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);
 							break;
 						case 7:
 							SetTextColor(hdc, RGB(145,145,146));
