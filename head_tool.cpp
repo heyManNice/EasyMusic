@@ -148,7 +148,7 @@ int Loadhead(HINSTANCE hInstance,HWND hwnd){
 	SetWindowLongPtr(hwnd_search, GWLP_WNDPROC, (LONG_PTR)searchProc);
 	//输入框
 	
-	HWND Edit = CreateWindowExA(0, "EDIT",NULL,
+	HWND Edit = CreateWindowExW(0, L"EDIT",NULL,
 								WS_CHILD | WS_VISIBLE | ES_LEFT | ES_AUTOHSCROLL | ES_WANTRETURN,DDPI(30.66), DDPI(8),
 								DPI(120), DDPI(23),Edit_out_hwnm,
 								(HMENU)23,(HINSTANCE)GetWindowLongPtr(Edit_out_hwnm, GWLP_HINSTANCE),NULL);
