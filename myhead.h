@@ -17,6 +17,8 @@
 #include <mmsystem.h>
 #include <wininet.h>
 
+#include "utils.h"
+#include "player_service.h"
 
 //主窗口事件
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
@@ -101,11 +103,6 @@ int tooltip_hide();
 //初始化绘图设备
 int init_gdiDevice();
 
-//字符集转换
-std::string Utf8ToGbk(std::string str);
-std::string Utf8ToGbk(const char *src_str);
-std::string GbkToUtf8(const char *src_str);
-
 //调音量面板的显示与隐藏
 void VolumePanel_show();
 void VolumePanel_hide();
@@ -138,7 +135,7 @@ struct image
 };
 
 //正在播放类
-class PlayingSong{
+class Player{
 	public:
 		int id;
 		std::string name;
@@ -150,25 +147,29 @@ class PlayingSong{
 		std::string lrc;
 		std::string totalTime_str;
 		std::string position_str;
+
 		long totalTime;
 		long position;
 		int time;
 		int playing;
+
 		int newVolume;
 		int theVolumeBeforeMute;
 		void SetMusic(int id);
+		void ProgressLoop();
+
 		void Play();
 		void Pause();
-		void getTotalTime_str();
-		void getPosition_str();
-		void ProgressLoop();
 		void PlayFromPosition(long position);
 		void setVolume(int Vnum);
+
 		int getVolume();
+		void UpdateTotalTime();
+		void UpdatePosition();
 };
 
 struct SearchResultPage_struct{
-	std::string keyword;
+	std::wstring keyword;
 	int PlayALL = 0;
 	int DownloadALL = 0;
 	int itemNum = 0;
@@ -213,7 +214,7 @@ extern std::map<std::string,HBRUSH> myBRUSH;
 extern std::map<int,MenuItem> MenuItemList;
 extern std::map<int,MainIndexBTN> MyMusicItemList;
 extern std::string domainName;
-extern PlayingSong player;
+extern Player player;
 extern SearchResultPage_struct SearchResultPage;
 extern SearchItemWidth_struct SearchItemWidth;
 extern std::map<int,SearchItemInfo__struct> SearchItemInfo;

@@ -7,7 +7,7 @@
 
 std::map<int,SearchItemInfo__struct> SearchItemInfo;
 
-void ToSearchMusic(std::string keyword){
+void ToSearchMusic(std::wstring keyword){
 	int padding = DPI(28);
 	int margin_top = DPI(4);
 	
@@ -93,9 +93,9 @@ LRESULT CALLBACK searchEditProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 			if(wParam == VK_RETURN){
 				int len = GetWindowTextLengthA(hwnd);
 				if(len!=0){
-					char Text[255];
+					wchar_t Text[255];
 					memset(Text,0,255);
-					GetWindowTextA(hwnd,Text,len+1);
+					GetWindowTextW(hwnd,Text,len+1);
 					//cout<<"接收到:"<<len<<"->"<<Text<<endl;
 					ToSearchMusic(Text);
 	                return 0;

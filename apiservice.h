@@ -8,6 +8,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "utils.h"
+
 namespace apiservice {
 	namespace impl {
 		struct Artist
@@ -72,8 +74,8 @@ namespace apiservice {
 	std::tuple<int, SongResultPtr> GetSong(int id);
 
 	typedef std::shared_ptr<impl::SearchResult> SearchResultPtr;
-	std::tuple<int, SearchResultPtr> SearchSong(std::string_view keyword, int limit = 12);
-
+	std::tuple<int, SearchResultPtr> SearchSong(const std::string& keyword, int limit = 12);
+	inline std::tuple<int, SearchResultPtr> SearchSong(const std::wstring& keyword, int limit = 12) { return SearchSong(WideStringToString(keyword), limit); };
 }
 
 #endif // !EASYMUSIC_APISERVICE_H_
