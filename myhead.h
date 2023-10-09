@@ -6,7 +6,6 @@
 #include<assert.h>
 #include<fstream>
 #include <format>
-#include "yyjson/yyjson.h"
 #include <windows.h>
 #include <windowsx.h>
 #include <map>
