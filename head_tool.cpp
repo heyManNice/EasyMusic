@@ -47,10 +47,10 @@ void ToSearchMusic(std::wstring keyword){
 		SearchItemInfo[i].itemRect.bottom = padding + DPI(158) + i * DPI(34);
 
 		SearchItemInfo[i].id = i + 1;
-		SearchItemInfo[i].title = Utf8ToGbk(song.name);
+		SearchItemInfo[i].title = utf8_to_utf16le(song.name);
 		SearchItemInfo[i].songId = song.id;
-		SearchItemInfo[i].artist = Utf8ToGbk(song.artists[0].name);
-		SearchItemInfo[i].album = Utf8ToGbk(song.album.name);
+		SearchItemInfo[i].artist = utf8_to_utf16le(song.artists[0].name);
+		SearchItemInfo[i].album = utf8_to_utf16le(song.album.name);
 
 		int mm = 0;
 		int ss;

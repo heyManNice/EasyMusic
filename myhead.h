@@ -138,8 +138,8 @@ struct image
 class Player{
 	public:
 		int id;
-		std::string name;
-		std::string artist;
+		std::u16string name;
+		std::u16string artist;
 		std::string album;
 		std::string albumPic;
 		std::string url;
@@ -194,9 +194,9 @@ struct SearchItemInfo__struct{
 	int checked = 0;
 	int isLove = 0;
 	int isDownload = 0;
-	std::string title;
-	std::string artist;
-	std::string album;
+	std::u16string title;
+	std::u16string artist;
+	std::u16string album;
 	std::string length;
 	int heat;
 	RECT itemRect;
