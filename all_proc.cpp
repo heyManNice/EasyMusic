@@ -1056,7 +1056,7 @@ LRESULT CALLBACK IndexTitleProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM l
 				RECT TextRc;
 				CopyRect(&TextRc,&ps.rcPaint);
 				TextRc.left = DDPI(8);
-				DrawTextA(hdc,"我的音乐",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+				DrawTextW(hdc,L"我的音乐",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 			    SelectObject(hdc,holdpen);
 			    DeleteObject(hpen);
 			    SelectObject(hdc,holdFont);
@@ -2171,19 +2171,19 @@ LRESULT CALLBACK SearchResultPageProc(HWND hwnd, UINT Message, WPARAM wParam, LP
 					TextRc.bottom = TitleTextRc.bottom;
 					switch (i) {
 						case 4:
-							DrawTextA(hdc,"音乐标题",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextW(hdc, L"音乐标题",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 5:
-							DrawTextA(hdc,"歌手",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextW(hdc, L"歌手",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 6:
-							DrawTextA(hdc,"专辑",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextW(hdc, L"专辑",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 7:
-							DrawTextA(hdc,"时长",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextW(hdc, L"时长",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						case 8:
-							DrawTextA(hdc,"热度",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
+							DrawTextW(hdc, L"热度",-1,&TextRc,DT_VCENTER|DT_SINGLELINE);
 							break;
 						default:
 							//TODO
